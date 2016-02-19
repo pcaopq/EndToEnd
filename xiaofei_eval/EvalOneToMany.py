@@ -210,9 +210,9 @@ class EvalOneToMany:
 		last_record = self.eval_history[0][2]
 		for record in self.eval_history[1:]:
 			count += 1
-			if record[0] > last_record:
+			if record[2] > last_record:
 				y.append(last_record)
-				last_record = record[0]
+				last_record = record[2]
 				x.append(count)
 		y.append(last_record)
 		x.append(len(self.eval_history))
