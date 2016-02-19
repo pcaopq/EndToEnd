@@ -1,6 +1,8 @@
 from Box import Box
 from Segments import Segment, Segmentation
 import os
+import clean
+from driver import do_segment
 
 def get_evalpairs(path):
     ''''''
@@ -11,6 +13,8 @@ def get_evalpairs(path):
             getroot(fname)+'.demo_seg.txt' in files]
 
 def analyzepair(path, root):
+    do_segment(path+root.replace('.jpg','.xml'),path+root+'.demo_seg_hey.txt')
+    clean.tif_to_jpg(path+root+'.demo_seg_hey.txt',path+root+'.demo_seg.txt')
     with open(path+root+'.demo.txt') as f:
         GT = Segmentation(string=f.read())
     with open(path+root+'.demo_seg.txt') as f:

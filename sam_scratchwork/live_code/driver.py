@@ -4,12 +4,12 @@
 import sys
 import processXML as pXML
 
-
-if __name__ == "__main__":
-
-	image_file 	= sys.argv[1]
-	xml_file 	= sys.argv[2]
-	
+def do_segment(xml_file, outfile):
 	proc = pXML.ProcessXML(xml_file)
-	proc.writeStSpData('test2.txt')
-	proc.writeTBData('tb.txt')
+	#proc.writeStSpData('test2.txt')
+	proc.writeTBData(outfile)
+
+import Latex
+if __name__ == '__main__':
+    Latex.gen_latex('Eval Results', 'EV.tex')
+    Latex.gen_pdf('EV.tex', 'EV.pdf')

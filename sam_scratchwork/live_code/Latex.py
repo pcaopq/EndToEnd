@@ -3,7 +3,6 @@ L = '''
 \\usepackage[utf8]{inputenc}
 \\usepackage{graphicx}
 \\title{TITLE}
-\\date{}
 
 \\begin{document}
 
@@ -20,7 +19,7 @@ OUTLIERS
 '''
 
 import EvaluateBatch
-
+import os
 
 def gen_latex(title, fnameout):
     PC = '''\\includegraphics[width=15cm]{TEST.png}
@@ -30,5 +29,5 @@ def gen_latex(title, fnameout):
     myL = L.replace('TITLE',title).replace('PERFORMANCE CURVES',PC).replace('SUMMARY',SUM)
     with open(fnameout,'w') as f:
         f.write(myL)
-
-gen_latex('Eval Results', 'EV.tex')
+def gen_pdf(fnametex, fnamepdf):
+    os.system('pdflatex %s %s' % (fnametex,fnamepdf))
