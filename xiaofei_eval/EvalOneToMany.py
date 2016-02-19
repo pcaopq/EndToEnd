@@ -15,7 +15,7 @@ LABELS = ['text', 'title', 'other']
 
 class EvalOneToMany:
 	
-    # path
+	# path
 	image_path = './images/0005.jpg'
 	segmentation_path = './images/0005.jpg.demo_full.txt'
 	ground_truth_path = './images/0005.jpg.demo_full.txt'
@@ -25,10 +25,10 @@ class EvalOneToMany:
 
 	image = None
 
-    # record the accuracy data
+	# record the accuracy data
 	eval_history = []
 
-    # initialize the model. load the image
+	# initialize the model. load the image
 	def __init__(self, img_path=None, gt_path=None):
 		if img_path is not None:
 			self.image_folder = img_path
@@ -42,7 +42,7 @@ class EvalOneToMany:
 		else:
 			self.gt_blocks = self.read_segmentation(self.ground_truth_path)
 
-    # read the segmentation coordinates and label from files
+	# read the segmentation coordinates and label from files
 	def read_segmentation(self, f_path):
 		blocks = []
 		with open(f_path) as f:
@@ -50,12 +50,12 @@ class EvalOneToMany:
 			for line in lines:
 				label_and_block = line.split('|')
 				label = label_and_block[0]
-                
+
 				for i in range(1, len(label_and_block)):
 					coords = re.sub(r'[\[\],]', '', label_and_block[i]).rstrip().split(' ')
-                    coord0 = [float(coords[0]), float(coords[1])] #coordinates 1
-                    coord1 = [float(coords[2]), float(coords[3])] #coordinates 2
-                    box = Box(coord0, coord1, None, label)
+					coord0 = [float(coords[0]), float(coords[1])] #coordinates 1
+					coord1 = [float(coords[2]), float(coords[3])] #coordinates 2
+					box = Box(coord0, coord1, None, label)
 					blocks.append(box)
 		return blocks
 
@@ -67,12 +67,11 @@ class EvalOneToMany:
 			seg_blocks = self.read_segmentation(seg_path)
 		N = [0.0] * NUM_CLASS # number of blocks for each class in ground truth
 		M = [0.0] * NUM_CLASS # number of blocks for each class in guess
-        one2one = [0.0] * NUM_CLASS # number of blocks which has a score larger than 0.85
-        g_one2many = [0.0] * NUM_CLASS # number of ground truth segmentation that matches to more than one detection segmentation
-        g_many2one = [0.0] * NUM_CLASS # number of ground truth segmentation that more than one matches to the same one detections
-        d_one2many = [0.0] * NUM_CLASS # number of detection segmentation that matches to more than one ground truth segmentation
-        d_many2one = [0.0] * NUM_CLASS # number of detection segmentation that more than one matches to the same one segmentation
-
+		one2one = [0.0] * NUM_CLASS # number of blocks which has a score larger than 0.85
+		g_one2many = [0.0] * NUM_CLASS # number of ground truth segmentation that matches to more than one detection segmentation
+		g_many2one = [0.0] * NUM_CLASS # number of ground truth segmentation that more than one matches to the same one detections
+		d_one2many = [0.0] * NUM_CLASS # number of detection segmentation that matches to more than one ground truth segmentation
+		d_many2one = [0.0] * NUM_CLASS # number of detection segmentation that more than one matches to the same one segmentation
 		det = [0.0] * NUM_CLASS # detection rate (recall)
 		rec = [0.0] * NUM_CLASS # recognition accuracy (precision)
 
@@ -154,8 +153,8 @@ class EvalOneToMany:
 		for c in range(NUM_CLASS):
 			if N[c] > 0:
 				num_class += 1
-        DET = 0 # recall
-        REC = 0 # precision
+		DET = 0 # recall
+		REC = 0 # precision
 		for i in range(num_class):
 			DET += det[i] * N[i] / sum(N)
 			REC += rec[i] * M[i] / sum(M)
@@ -182,10 +181,10 @@ class EvalOneToMany:
 			sg = (Box2.coors[1][0] - Box2.coors[0][0]) * (Box2.coors[1][1] - Box2.coors[0][1])
 			return overlap / (sr + sg - overlap)
 		else:
-            #implementation of black pixel
-            overlap = 0.0 #area of intesection of two segments
-            sr = 0.0 # area of detection segments
-            sg = 0.0 # area of ground truth segments
+			#implementation of black pixel
+			overlap = 0.0 #area of intesection of two segments
+			sr = 0.0 # area of detection segments
+			sg = 0.0 # area of ground truth segments
 			for i in range(int(max(Box1.coors[0][0], Box2.coors[0][0])), int(min(Box1.coors[1][0], Box2.coors[1][0]))):
 				for j in range(int(max(Box1.coors[0][1], Box2.coors[0][1])), int(min(Box1.coors[1][1], Box2.coors[1][1])), ):
 					if self.image[i][j] >= 127.5:
@@ -237,7 +236,7 @@ class EvalOneToMany:
 		plt.imshow(self.image, cmap = plt.get_cmap('gray'))
 		plt.show()
 
-    # generate the file in latex form to plot the graphs
+	# generate the file in latex form to plot the graphs
 	def generate_report(self):
 		r = Report_generator('./latex_generator/template.tex', './latex_generator/report.tex')
 		r.generate_report(self.eval_history)
