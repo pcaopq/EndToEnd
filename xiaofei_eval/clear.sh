@@ -1,1 +1,1 @@
-rm report* *.png ./latex_generator/report*
+rm report* *.png ./latex_generator/report.*
