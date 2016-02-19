@@ -5,8 +5,10 @@ MDP 2016 Proquest News
 
 ## Usage
 
+Under demo/, running
 ```
 python driver.py
 ```
-
-will process the images in the data folder.
+will run the current segmentation algorithm,
+then evaluate the output through our evaluation pipeline,
+producing ``EV.pdf''
