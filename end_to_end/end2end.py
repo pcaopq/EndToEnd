@@ -21,13 +21,18 @@ class EndToEnd:
 
     def segment(self):
         for fname in self.files:
+            print(fname)
             for imp_name in self.implementations:
                 if not os.path.isfile(imp_name):
                     print 'invalid implementation file name'
                     continue
                 command = 'python %s %s %s %s' % ((imp_name,) +
                       tuple(fname+ext for ext in ('','.xml','.json')))
+<<<<<<< HEAD
                 print command
+=======
+                #print('QWERTYUYTREWERTYUYTREWERTY',command)
+>>>>>>> e7e622362568ee59c927e08269f5015387e28e96
                 os.system(command)
     def evaluate(self):
         '''assumes format groundtruth - ....gt.json'''
