@@ -141,7 +141,7 @@ class EvalOneToMany:
 		NSM = 0
 		if num_class * (sum(det) + sum(rec)) != 0:
 			NSM = 2 * (sum(det) * sum(rec)) / (num_class * (sum(det) + sum(rec)));
-		# print NSM, REC, DET # final score, precision, recall
+		print NSM, REC, DET # final score, precision, recall
 
 		self.save_output((REC, DET, NSM))
 
