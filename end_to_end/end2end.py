@@ -16,9 +16,11 @@ class EndToEnd:
             self.files = mydict['Files']
     def segment(self):
         for fname in self.files:
+            print(fname)
             for imp_name in self.implementations:
                 command = 'python %s %s %s %s' % ((imp_name,) +
                       tuple(fname+ext for ext in ('','.xml','.json')))
+                #print('QWERTYUYTREWERTYUYTREWERTY',command)
                 os.system(command)
     def evaluate(self):
         '''assumes format groundtruth - ....gt.json'''
