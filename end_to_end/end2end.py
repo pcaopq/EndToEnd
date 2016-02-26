@@ -31,23 +31,40 @@ class EndToEnd:
                 os.system(command)
     def evaluate(self):
         '''assumes format groundtruth - ....gt.json'''
-        for fname in self.files:
-            for metric_name in self.metrics:
-                if not os.path.isfile(metric_name):
-                    print 'invalid implementation file name'
-                    continue
-                command = 'python %s %s %s %s %s' % ((metric_name,) +
-                      tuple(fname+ext for ext in ('.gt.json', '.json', '', '.xml')))
-                print command
+        for imp_name in self.implementations:
+            for fname in self.files:
+                for metric_name in self.metrics:
+                    if not os.path.isfile(metric_name):
+                        print 'invalid implementation file name'
+                        continue
+                    command = 'python %s %s %s %s %s %s' % ((metric_name,) +
+                          tuple(fname+ext for ext in ('.gt.json', '.json', '', '.xml'))+(imp_name,))
+                    print command
                 os.system(command)
 
     def collect_data(self):
+        ''' read in output data from evaluation metrics
+            e.g. assume we have an image file named 0005.jpg, and segmentation algorithm
+            textblocksBS.py, then this function will read data from 0005.jpg.textblcoksBS.py 
+            data will be saved in a dictionary in the following format:
+            {"textblocksBS.py":
+                {
+                    precision:
+                    recall:
+                    score:
+                    history: 
+                    {
+                        (precision1, recall1, score1), 
+                        (precision2, recall2, score2)
+                    }
+                }
+        '''
         for i, imp_name in enumerate(self.implementations):
             alg_result = {} # a dictionary contains precision, recall, score, history
             imp_pre, imp_rec, imp_score = 0.0, 0.0, 0.0
             eval_history = [] # precision, recall, score average for each image
             for fname in self.files:
-                history_path = fname + '.evalout'
+                history_path = fname + '.' + imp_name + '.out'
                 if not os.path.isfile(history_path):
                     print 'no evaluation history', history_path
                     return
@@ -107,7 +124,7 @@ class EndToEnd:
             plt.plot(x,y)
             plt.xlabel('percentage of data')
             plt.ylabel('accuracy')
-            plt.line = plt.plot(x, y, line_colors[i % len(line_colors)], label='performance curve')
+            plt.line = plt.plot(x, y, line_colors[i % len(line_colors)], label=imp_name)
             plt.legend(loc='upper left')
         plt.hold(False)
         plt.savefig('./performance.png')
