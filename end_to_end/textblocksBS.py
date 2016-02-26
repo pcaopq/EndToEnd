@@ -56,7 +56,6 @@ if __name__ == "__main__":
 	
 	# write to json
 	with open( f_out, 'w' ) as f:
-		#:print('@#$%^&*^%$#$%^&*&^%$#$%^&*&^%')
 		json.dump(seg, f, indent=4)
 	f.close()
 
