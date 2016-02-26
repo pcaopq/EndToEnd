@@ -1,10 +1,8 @@
 import sys, os
-sys.path.insert(0, './latex_generator')
 
 from Segmentation import Segmentation
 import re
 
-from report_generator import *
 from readJSON import *
 
 NUM_CLASS = 3 # the number of classes, including title, text and other
@@ -145,19 +143,6 @@ class EvalOneToMany:
 
 		self.save_output((REC, DET, NSM))
 
-
-
-	def plot_result(self):
-		plt.imshow(self.image, cmap = plt.get_cmap('gray'))
-		plt.show()
-
-	# generate the file in latex form to plot the graphs
-	def generate_report(self):
-		r = Report_generator('./latex_generator/template.tex', './latex_generator/report.tex')
-		r.generate_report(self.eval_history)
-		os.system('pdflatex ./latex_generator/report.tex')
-		os.system('open ./report.pdf')
-
 	def save_output(self, record):
 		with open(self.history_path, 'a') as f:
 			f.write('%s %s %s' % (record[0], record[1], record[2]))
@@ -168,8 +153,6 @@ def main():
 
 	evaluator = EvalOneToMany(gt_path, seg_path, img_path, xml_path)
 	evaluator.evaluate()
-	# evaluator.plot_performance_curve()
-	# evaluator.generate_report()
 
 if __name__ == '__main__':
 	main()
