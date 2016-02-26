@@ -12,3 +12,5 @@ python end2end.py test.config
 will run the current segmentation algorithm,
 then evaluate the output through our evaluation pipeline,
 producing ``report.pdf''
+
+Requires: PIL, pdflatex
