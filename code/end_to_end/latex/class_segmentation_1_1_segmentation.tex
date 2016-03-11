@@ -1,0 +1,130 @@
+\hypertarget{class_segmentation_1_1_segmentation}{}\section{Segmentation.\+Segmentation Class Reference}
+\label{class_segmentation_1_1_segmentation}\index{Segmentation.\+Segmentation@{Segmentation.\+Segmentation}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{class_segmentation_1_1_segmentation_ad751701c6617728b68b06e32962b6156}{\+\_\+\+\_\+init\+\_\+\+\_\+}
+\item 
+def \hyperlink{class_segmentation_1_1_segmentation_a07fb536f1e4109215a8cc61524353788}{\+\_\+\+\_\+str\+\_\+\+\_\+} (self)
+\item 
+def \hyperlink{class_segmentation_1_1_segmentation_a8b24c53ea92aa10f735b769094881b6e}{from\+\_\+str} (self, string)
+\item 
+def \hyperlink{class_segmentation_1_1_segmentation_a77218c60fc3fd240ad50caabb56b6d42}{pair\+\_\+recall} (self, truth)
+\item 
+def \hyperlink{class_segmentation_1_1_segmentation_a7233b24262403f2a760a13fb44f0471e}{pair\+\_\+precision} (self, truth)
+\item 
+def \hyperlink{class_segmentation_1_1_segmentation_abf3b4d99e64e90f7a0216afca4f1f7e1}{pair\+\_\+fscore} (self, truth)
+\item 
+def \hyperlink{class_segmentation_1_1_segmentation_ad0e4c4ed36785f67a6420179b3386608}{jaccard\+\_\+precision}
+\item 
+def \hyperlink{class_segmentation_1_1_segmentation_ab5197a59601c0819874bcb34cf063640}{jaccard\+\_\+recall}
+\item 
+def \hyperlink{class_segmentation_1_1_segmentation_a750bcfb53d797bd75c24c2ef7179fdf2}{jaccard\+\_\+fscore}
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_segmentation_1_1_segmentation_a7b8d2af30553466c5b027f50618e2ba2}{segs}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyVerb}A Segmentation is a list of Polygons, presumed pairwise non-overlapping.
+\end{DoxyVerb}
+ 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_segmentation_1_1_segmentation_ad751701c6617728b68b06e32962b6156}{}\index{Segmentation\+::\+Segmentation@{Segmentation\+::\+Segmentation}!\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}!Segmentation\+::\+Segmentation@{Segmentation\+::\+Segmentation}}
+\subsubsection[{\+\_\+\+\_\+init\+\_\+\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}def Segmentation.\+Segmentation.\+\_\+\+\_\+init\+\_\+\+\_\+ (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{segments = {\ttfamily \mbox{[}\mbox{]}}, }
+\item[{}]{string = {\ttfamily None}, }
+\item[{}]{fname = {\ttfamily None}}
+\end{DoxyParamCaption}
+)}\label{class_segmentation_1_1_segmentation_ad751701c6617728b68b06e32962b6156}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_segmentation_1_1_segmentation_a07fb536f1e4109215a8cc61524353788}{}\index{Segmentation\+::\+Segmentation@{Segmentation\+::\+Segmentation}!\+\_\+\+\_\+str\+\_\+\+\_\+@{\+\_\+\+\_\+str\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+str\+\_\+\+\_\+@{\+\_\+\+\_\+str\+\_\+\+\_\+}!Segmentation\+::\+Segmentation@{Segmentation\+::\+Segmentation}}
+\subsubsection[{\+\_\+\+\_\+str\+\_\+\+\_\+}]{\setlength{\rightskip}{0pt plus 5cm}def Segmentation.\+Segmentation.\+\_\+\+\_\+str\+\_\+\+\_\+ (
+\begin{DoxyParamCaption}
+\item[{}]{self}
+\end{DoxyParamCaption}
+)}\label{class_segmentation_1_1_segmentation_a07fb536f1e4109215a8cc61524353788}
+\hypertarget{class_segmentation_1_1_segmentation_a8b24c53ea92aa10f735b769094881b6e}{}\index{Segmentation\+::\+Segmentation@{Segmentation\+::\+Segmentation}!from\+\_\+str@{from\+\_\+str}}
+\index{from\+\_\+str@{from\+\_\+str}!Segmentation\+::\+Segmentation@{Segmentation\+::\+Segmentation}}
+\subsubsection[{from\+\_\+str}]{\setlength{\rightskip}{0pt plus 5cm}def Segmentation.\+Segmentation.\+from\+\_\+str (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{string}
+\end{DoxyParamCaption}
+)}\label{class_segmentation_1_1_segmentation_a8b24c53ea92aa10f735b769094881b6e}
+\hypertarget{class_segmentation_1_1_segmentation_a750bcfb53d797bd75c24c2ef7179fdf2}{}\index{Segmentation\+::\+Segmentation@{Segmentation\+::\+Segmentation}!jaccard\+\_\+fscore@{jaccard\+\_\+fscore}}
+\index{jaccard\+\_\+fscore@{jaccard\+\_\+fscore}!Segmentation\+::\+Segmentation@{Segmentation\+::\+Segmentation}}
+\subsubsection[{jaccard\+\_\+fscore}]{\setlength{\rightskip}{0pt plus 5cm}def Segmentation.\+Segmentation.\+jaccard\+\_\+fscore (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{truth, }
+\item[{}]{gamma = {\ttfamily 1.0}}
+\end{DoxyParamCaption}
+)}\label{class_segmentation_1_1_segmentation_a750bcfb53d797bd75c24c2ef7179fdf2}
+\begin{DoxyVerb}the higher the gamma, the more perfection is prized\end{DoxyVerb}
+ \hypertarget{class_segmentation_1_1_segmentation_ad0e4c4ed36785f67a6420179b3386608}{}\index{Segmentation\+::\+Segmentation@{Segmentation\+::\+Segmentation}!jaccard\+\_\+precision@{jaccard\+\_\+precision}}
+\index{jaccard\+\_\+precision@{jaccard\+\_\+precision}!Segmentation\+::\+Segmentation@{Segmentation\+::\+Segmentation}}
+\subsubsection[{jaccard\+\_\+precision}]{\setlength{\rightskip}{0pt plus 5cm}def Segmentation.\+Segmentation.\+jaccard\+\_\+precision (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{truth, }
+\item[{}]{gamma = {\ttfamily 1.0}}
+\end{DoxyParamCaption}
+)}\label{class_segmentation_1_1_segmentation_ad0e4c4ed36785f67a6420179b3386608}
+\hypertarget{class_segmentation_1_1_segmentation_ab5197a59601c0819874bcb34cf063640}{}\index{Segmentation\+::\+Segmentation@{Segmentation\+::\+Segmentation}!jaccard\+\_\+recall@{jaccard\+\_\+recall}}
+\index{jaccard\+\_\+recall@{jaccard\+\_\+recall}!Segmentation\+::\+Segmentation@{Segmentation\+::\+Segmentation}}
+\subsubsection[{jaccard\+\_\+recall}]{\setlength{\rightskip}{0pt plus 5cm}def Segmentation.\+Segmentation.\+jaccard\+\_\+recall (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{truth, }
+\item[{}]{gamma = {\ttfamily 1.0}}
+\end{DoxyParamCaption}
+)}\label{class_segmentation_1_1_segmentation_ab5197a59601c0819874bcb34cf063640}
+\hypertarget{class_segmentation_1_1_segmentation_abf3b4d99e64e90f7a0216afca4f1f7e1}{}\index{Segmentation\+::\+Segmentation@{Segmentation\+::\+Segmentation}!pair\+\_\+fscore@{pair\+\_\+fscore}}
+\index{pair\+\_\+fscore@{pair\+\_\+fscore}!Segmentation\+::\+Segmentation@{Segmentation\+::\+Segmentation}}
+\subsubsection[{pair\+\_\+fscore}]{\setlength{\rightskip}{0pt plus 5cm}def Segmentation.\+Segmentation.\+pair\+\_\+fscore (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{truth}
+\end{DoxyParamCaption}
+)}\label{class_segmentation_1_1_segmentation_abf3b4d99e64e90f7a0216afca4f1f7e1}
+\hypertarget{class_segmentation_1_1_segmentation_a7233b24262403f2a760a13fb44f0471e}{}\index{Segmentation\+::\+Segmentation@{Segmentation\+::\+Segmentation}!pair\+\_\+precision@{pair\+\_\+precision}}
+\index{pair\+\_\+precision@{pair\+\_\+precision}!Segmentation\+::\+Segmentation@{Segmentation\+::\+Segmentation}}
+\subsubsection[{pair\+\_\+precision}]{\setlength{\rightskip}{0pt plus 5cm}def Segmentation.\+Segmentation.\+pair\+\_\+precision (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{truth}
+\end{DoxyParamCaption}
+)}\label{class_segmentation_1_1_segmentation_a7233b24262403f2a760a13fb44f0471e}
+\hypertarget{class_segmentation_1_1_segmentation_a77218c60fc3fd240ad50caabb56b6d42}{}\index{Segmentation\+::\+Segmentation@{Segmentation\+::\+Segmentation}!pair\+\_\+recall@{pair\+\_\+recall}}
+\index{pair\+\_\+recall@{pair\+\_\+recall}!Segmentation\+::\+Segmentation@{Segmentation\+::\+Segmentation}}
+\subsubsection[{pair\+\_\+recall}]{\setlength{\rightskip}{0pt plus 5cm}def Segmentation.\+Segmentation.\+pair\+\_\+recall (
+\begin{DoxyParamCaption}
+\item[{}]{self, }
+\item[{}]{truth}
+\end{DoxyParamCaption}
+)}\label{class_segmentation_1_1_segmentation_a77218c60fc3fd240ad50caabb56b6d42}
+\begin{DoxyVerb}Returns probability that two random points from truth's segments
+   will be classified the same way by truth and self (as belonging
+   either to the same or to different articles)\end{DoxyVerb}
+ 
+
+\subsection{Member Data Documentation}
+\hypertarget{class_segmentation_1_1_segmentation_a7b8d2af30553466c5b027f50618e2ba2}{}\index{Segmentation\+::\+Segmentation@{Segmentation\+::\+Segmentation}!segs@{segs}}
+\index{segs@{segs}!Segmentation\+::\+Segmentation@{Segmentation\+::\+Segmentation}}
+\subsubsection[{segs}]{\setlength{\rightskip}{0pt plus 5cm}Segmentation.\+Segmentation.\+segs}\label{class_segmentation_1_1_segmentation_a7b8d2af30553466c5b027f50618e2ba2}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_segmentation_8py}{Segmentation.\+py}\end{DoxyCompactItemize}

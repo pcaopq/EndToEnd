@@ -21,26 +21,57 @@ class EndToEnd:
 
     def segment(self):
         for fname in self.files:
-            for imp_name in self.implementations:
-                if not os.path.isfile(imp_name):
-                    print 'invalid implementation file name'
-                    continue
-                command = 'python %s %s %s %s' % ((imp_name,) +
-                      tuple(fname+ext for ext in ('','.xml','.json')))
-                print command
-                os.system(command)
+            if os.path.isdir(fname):
+                for f in os.listdir(fname):
+                    temp = f.split('.')
+                    if temp[-1] == 'jpg':
+                        f = temp[0] 
+                        for imp_name in self.implementations:
+                            if not os.path.isfile(imp_name):
+                                print 'invalid implementation file name'
+                                continue
+                            command = 'python %s %s %s %s' % ((imp_name,) +
+                                  tuple(fname+'/'+f+ext for ext in ('.jpg','.xml','.result.json')))
+                            print command
+                            os.system(command)                    
+            else:
+                f = fname.split('.')[0]
+                for imp_name in self.implementations:
+                    if not os.path.isfile(imp_name):
+                        print 'invalid implementation file name'
+                        continue
+                    command = 'python %s %s %s %s' % ((imp_name,) +
+                          tuple(f+ext for ext in ('.jpg','.xml','.json')))
+                    print command
+                    os.system(command)
+
     def evaluate(self):
         '''assumes format groundtruth - ....gt.json'''
         for imp_name in self.implementations:
             for fname in self.files:
-                for metric_name in self.metrics:
-                    if not os.path.isfile(metric_name):
-                        print 'invalid implementation file name'
-                        continue
-                    command = 'python %s %s %s %s %s %s' % ((metric_name,) +
-                          tuple(fname+ext for ext in ('.gt.json', '.json', '', '.xml'))+(imp_name,))
-                    print command
-                os.system(command)
+                if os.path.isdir(fname):
+                    for f in os.listdir(fname):
+                        temp = f.split('.')
+                        if temp[-1] == 'jpg':
+                            f = temp[0] 
+                            for metric_name in self.metrics:
+                                if not os.path.isfile(metric_name):
+                                    print 'invalid implementation file name'
+                                    continue
+                                command = 'python %s %s %s %s %s %s' % ((metric_name,) +
+                                      tuple(fname+'/'+f+ext for ext in ('.json', '.result.json', '.jpg', '.xml'))+(imp_name,))
+                                print command
+                            os.system(command)
+                else:
+                    f = fname.split('.')[0]
+                    for metric_name in self.metrics:
+                        if not os.path.isfile(metric_name):
+                            print 'invalid implementation file name'
+                            continue
+                        command = 'python %s %s %s %s %s %s' % ((metric_name,) +
+                              tuple(f+ext for ext in ('.json', '.result.json', '.jpg', '.xml'))+(imp_name,))
+                        print command
+                    os.system(command)                    
 
     def collect_data(self):
         ''' read in output data from evaluation metrics
@@ -63,31 +94,55 @@ class EndToEnd:
             alg_result = {} # a dictionary contains precision, recall, score, history
             imp_pre, imp_rec, imp_score = 0.0, 0.0, 0.0
             eval_history = [] # precision, recall, score average for each image
+            nfiles = len(self.files)
             for fname in self.files:
-                history_path = fname + '.' + imp_name + '.out'
-                if not os.path.isfile(history_path):
-                    print 'no evaluation history', history_path
-                    return
+                if os.path.isdir(fname):
+                    nfiles = 0
+                    for f in os.listdir(fname):
+                        temp = f.split('.')
+                        if temp[-1] == 'jpg':
+                            nfiles += 1
+                            history_path = fname + '/' + f + '.' + imp_name + '.out'
+                            if not os.path.isfile(history_path):
+                                print 'no evaluation history', history_path
+                                return
 
-                img_pre, img_rec, img_score = 0.0, 0.0, 0.0
-                with open(history_path) as f:
-                    lines = f.read().rstrip().split('\n')
-                    for line in lines:
-                        numbers = line.split(' ')
-                        img_pre += float(numbers[0])
-                        img_rec += float(numbers[1])
-                        img_score += float(numbers[2])
-                    eval_history.append((img_pre / len(lines), img_rec / len(lines), \
-                        img_score / len(lines)))
+                            img_pre, img_rec, img_score = 0.0, 0.0, 0.0
+                            with open(history_path) as hf:
+                                lines = hf.read().rstrip().split('\n')
+                                for line in lines:
+                                    numbers = line.split(' ')
+                                    img_pre += float(numbers[0])
+                                    img_rec += float(numbers[1])
+                                    img_score += float(numbers[2])
+                                eval_history.append((img_pre / len(lines), img_rec / len(lines), \
+                                    img_score / len(lines)))
+                else:
+                    history_path = fname + '.' + imp_name + '.out'
+                    if not os.path.isfile(history_path):
+                        print 'no evaluation history', history_path
+                        return
+
+                    img_pre, img_rec, img_score = 0.0, 0.0, 0.0
+                    with open(history_path) as f:
+                        lines = f.read().rstrip().split('\n')
+                        for line in lines:
+                            numbers = line.split(' ')
+                            img_pre += float(numbers[0])
+                            img_rec += float(numbers[1])
+                            img_score += float(numbers[2])
+                        eval_history.append((img_pre / len(lines), img_rec / len(lines), \
+                            img_score / len(lines)))                    
             
             # calculate the precision, recall, score average for each algorithm
+            print eval_history
             for r in eval_history:
                 imp_pre += r[0]
                 imp_rec += r[1]
                 imp_score += r[2]
-            imp_pre /= len(self.files)
-            imp_rec /= len(self.files)
-            imp_score /= len(self.files)
+            imp_pre /= nfiles
+            imp_rec /= nfiles
+            imp_score /= nfiles
 
             eval_history = sorted(eval_history, key=lambda tup: tup[2])
 
@@ -135,7 +190,7 @@ class EndToEnd:
         r = Report_generator('./latex_generator/template.tex', './latex_generator/report.tex')
         r.generate_report(self.implementations, self.eval_results)
         os.system('pdflatex ./latex_generator/report.tex')
-        # os.system('open ./report.pdf')
+        os.system('open ./report.pdf')
 
 def main():
    config_filename = sys.argv[1]

@@ -18,16 +18,20 @@
 '''
 
 import json
-# from pprint import pprint
+from pprint import pprint
 from Box import Box
 from Polygon import Polygon
 from Segmentation import Segmentation
 
-def seg_from_json(fname):
+def seg_from_json(fname, gt_flag):
 	with open(fname) as data_file:    
 	    data = json.load(data_file)
 
-	annotations = data["annotations"]
+	annotations = {}
+	if gt_flag:
+		annotations = data[0]["annotations"]
+	else:
+		annotations = data["annotations"]
 	# print annotations[0].items()
 
 	# TODO: make sure to address the box type (article/image/title) assignment problem (i.e.
