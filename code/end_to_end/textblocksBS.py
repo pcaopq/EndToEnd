@@ -26,10 +26,11 @@ def size_of_image(imname):
 
 
 if __name__ == "__main__":
-	
-	f_image = sys.argv[1]
-	f_xml = sys.argv[2]
-	f_out = sys.argv[3]
+
+	f_out_folder = sys.argv[1]
+	f_image = sys.argv[2]
+	f_xml = sys.argv[3]
+	f_out = sys.argv[4].split('/')[-1]
 
 	# read xml data
 	pxml = processXML.ProcessXML(f_xml)
@@ -55,7 +56,7 @@ if __name__ == "__main__":
 		id += 1
 	
 	# write to json
-	with open( f_out, 'w' ) as f:
+	with open( f_out_folder+'/'+f_out, 'w' ) as f:
 		json.dump(seg, f, indent=4)
 	f.close()
 

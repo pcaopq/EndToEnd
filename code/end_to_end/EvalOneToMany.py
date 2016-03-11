@@ -12,35 +12,27 @@ LABELS = ['text', 'title', 'other']
 
 class EvalOneToMany:
 
-	# path
-	gt_path = '../../images/0005.jpg.gt.json'
-	seg_path = '../../images/0005.jpg.json'
-	img_path = '../../images/0005.jpg'
-	xml_path = '../../images/0005.jpg.xml'
-	history_path = '../../images/0005.jpg.evalout'
-
-	imp_name = 'textblocksBS.py'
-
 	# record the accuracy data
 	eval_history = []
 
 	# initialize the model. load the image
 	# ground_truth and seg_to_eval are both Segmentation class objects
-	def __init__(self, gt_path, seg_path, img_path=None, xml_path=None, imp_name=None):
+	def __init__(self, out_folder, seg_folder, gt_path, seg_path, img_path=None, xml_path=None, imp_name=None):
 
 		self.seg_path = seg_path
 		self.gt_path = gt_path
 		self.xml_path = xml_path
+		self.out_folder = out_folder
 
 		if img_path is not None:
 			self.img_path = img_path
 		if xml_path is not None:
 			self.xml_path = img_path
 
-		self.history_path = self.img_path + '.' + imp_name + '.out'
+		self.history_path = self.img_path.split('/')[-1] + '.' + imp_name + '.out'
 
 		self.ground_truth = seg_from_json(gt_path, True)
-		self.seg_to_eval = seg_from_json(seg_path, False)
+		self.seg_to_eval = seg_from_json(seg_folder+'/'+seg_path.split('/')[-1], False)
 
 	def evaluate(self):
 		# user can provide either the segmentation blocks or the segmentation file path
@@ -146,14 +138,15 @@ class EvalOneToMany:
 		self.save_output((REC, DET, NSM))
 
 	def save_output(self, record):
-		with open(self.history_path, 'a') as f:
+		print self.out_folder+'/'+self.history_path
+		with open(self.out_folder+'/'+self.history_path, 'a') as f:
 			f.write('%s %s %s' % (record[0], record[1], record[2]))
 			f.write('\n')
 
 def main():
-	gt_path, seg_path, img_path, xml_path, imp_name = sys.argv[1:6]
+	out_folder, seg_folder, gt_path, seg_path, img_path, xml_path, imp_name = sys.argv[1:8]
 
-	evaluator = EvalOneToMany(gt_path, seg_path, img_path, xml_path, imp_name)
+	evaluator = EvalOneToMany(out_folder, seg_folder, gt_path, seg_path, img_path, xml_path, imp_name)
 	evaluator.evaluate()
 
 if __name__ == '__main__':

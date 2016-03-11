@@ -17,6 +17,12 @@ class EndToEnd:
             self.metrics = mydict['Metrics']
             self.implementations = mydict['Implementations']
             self.files = mydict['Files']
+            self.seg_out_path = mydict['Output'][0]
+            if not os.path.isdir(self.seg_out_path):
+                os.system('mkdir self.seg_out_path')
+            self.eval_out_path = mydict['Output'][1]
+            if not os.path.isdir(self.eval_out_path):
+                os.system('mkdir self.eval_out_path')
             self.eval_results = {}
 
     def segment(self):
@@ -30,7 +36,7 @@ class EndToEnd:
                             if not os.path.isfile(imp_name):
                                 print 'invalid implementation file name'
                                 continue
-                            command = 'python %s %s %s %s' % ((imp_name,) +
+                            command = 'python %s %s %s %s %s' % ((imp_name, self.seg_out_path,) +
                                   tuple(fname+'/'+f+ext for ext in ('.jpg','.xml','.result.json')))
                             print command
                             os.system(command)                    
@@ -40,7 +46,7 @@ class EndToEnd:
                     if not os.path.isfile(imp_name):
                         print 'invalid implementation file name'
                         continue
-                    command = 'python %s %s %s %s' % ((imp_name,) +
+                    command = 'python %s %s %s %s %s' % ((imp_name, self.seg_out_path,) +
                           tuple(f+ext for ext in ('.jpg','.xml','.json')))
                     print command
                     os.system(command)
@@ -58,7 +64,7 @@ class EndToEnd:
                                 if not os.path.isfile(metric_name):
                                     print 'invalid implementation file name'
                                     continue
-                                command = 'python %s %s %s %s %s %s' % ((metric_name,) +
+                                command = 'python %s %s %s %s %s %s %s %s' % ((metric_name, self.eval_out_path, self.seg_out_path,) +
                                       tuple(fname+'/'+f+ext for ext in ('.json', '.result.json', '.jpg', '.xml'))+(imp_name,))
                                 print command
                             os.system(command)
@@ -68,7 +74,7 @@ class EndToEnd:
                         if not os.path.isfile(metric_name):
                             print 'invalid implementation file name'
                             continue
-                        command = 'python %s %s %s %s %s %s' % ((metric_name,) +
+                        command = 'python %s %s %s %s %s %s %s %s' % ((metric_name, self.eval_out_path, self.seg_out_path,) +
                               tuple(f+ext for ext in ('.json', '.result.json', '.jpg', '.xml'))+(imp_name,))
                         print command
                     os.system(command)                    
@@ -102,7 +108,7 @@ class EndToEnd:
                         temp = f.split('.')
                         if temp[-1] == 'jpg':
                             nfiles += 1
-                            history_path = fname + '/' + f + '.' + imp_name + '.out'
+                            history_path = self.eval_out_path+'/'+f+'.'+imp_name+'.out'
                             if not os.path.isfile(history_path):
                                 print 'no evaluation history', history_path
                                 return
@@ -118,7 +124,8 @@ class EndToEnd:
                                 eval_history.append((img_pre / len(lines), img_rec / len(lines), \
                                     img_score / len(lines)))
                 else:
-                    history_path = fname + '.' + imp_name + '.out'
+                    f = fname.split('/')[-1]
+                    history_path = self.eval_out_path+'/'+f+'.'+imp_name+'.out'
                     if not os.path.isfile(history_path):
                         print 'no evaluation history', history_path
                         return
