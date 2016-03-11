@@ -22,7 +22,7 @@ The configuration file serves as the input to the end-to-end evaluation system. 
 
 4. A path to the location of the predicted segmentations (i.e. output path). This is the “Outpath” field. This should be a path to a directory.
 
-The configuration file must have the following format:
+An example configuration file is displayed below. Let it be named "test.config". The configuration file must have the following format:
 
 ```
 {
@@ -34,4 +34,11 @@ The configuration file must have the following format:
 ```
 
 ### 2. Running the End-to-End system
-hit play
+Navigate to the code/ directory and in the terminal do:
+```
+python end2end.py test.config
+```
+Output will be sent to the output path detailed in test.config.
+
+### 3. Output
+some data and scores
