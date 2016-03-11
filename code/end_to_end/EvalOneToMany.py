@@ -13,11 +13,11 @@ LABELS = ['text', 'title', 'other']
 class EvalOneToMany:
 
 	# path
-	gt_path = './images/0005.jpg.gt.json'
-	seg_path = './images/0005.jpg.json'
-	img_path = './images/0005.jpg'
-	xml_path = './images/0005.jpg.xml'
-	history_path = './images/0005.jpg.evalout'
+	gt_path = '../../images/0005.jpg.gt.json'
+	seg_path = '../../images/0005.jpg.json'
+	img_path = '../../images/0005.jpg'
+	xml_path = '../../images/0005.jpg.xml'
+	history_path = '../../images/0005.jpg.evalout'
 
 	imp_name = 'textblocksBS.py'
 

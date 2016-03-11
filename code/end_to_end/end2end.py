@@ -135,7 +135,7 @@ class EndToEnd:
         r = Report_generator('./latex_generator/template.tex', './latex_generator/report.tex')
         r.generate_report(self.implementations, self.eval_results)
         os.system('pdflatex ./latex_generator/report.tex')
-        os.system('open ./report.pdf')
+        # os.system('open ./report.pdf')
 
 def main():
    config_filename = sys.argv[1]

@@ -1,1 +1,0 @@
-rm report* *.png ./latex_generator/report.*
