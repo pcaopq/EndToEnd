@@ -20,7 +20,7 @@ The configuration file serves as the input to the end-to-end evaluation system. 
 
 3. A path to the newspaper and ground-truth data, with which we will produce and evaluate segmentations. This is the “Data” field. The path should be to a directory (or a .jp2 if only evaluating one image). 
 
-4. A path to the location of the predicted segmentations (i.e. output path). This is the “Outpath” field. This should be a path to a directory.
+4. A path to the location of the predicted segmentations (i.e. output path), and a path to evaluation output. This is the “Outpath” field. This should be a list of two paths: one for the segmentation output, a second for the evaluation output.
 
 An example configuration file is displayed below. Let it be named "test.config". The configuration file must have the following format:
 
@@ -29,7 +29,7 @@ An example configuration file is displayed below. Let it be named "test.config".
 	“Metrics”: [“EvalOneToMany.py”],
 	“Implementations”: [“textblocksBS.py”],
 	“Data”: [“/path/to/data_and_groundtruth/”],
-	“Outpath”: [“/path/to/output_location”]
+	“Outpath”: [“/path/to/segmentation_output”, "/path/to/evaluation_output"]
 }
 ```
 
@@ -41,4 +41,7 @@ python end2end.py test.config
 Output will be sent to the output path detailed in test.config.
 
 ### 3. Output
-some data and scores
+The configuration file's "Outpath" field lists two paths: one path to a location for the segmentation output, a second path to the evaluation output. 
+
+1. Segmentation Output: The end-to-end system places the .json files produced by the segmentation algorithms in this path. The segmentation algorithms are those detailed in the configuration file's "Implementations" field.
+2. Evaluation Output: The end-to-end system places a .pdf report of the evaluation into this path. This .pdf file is for human digestion, as it nicely summarizes the results of each segmentation algorithm. Additionally, a text file containing the results is placed into this path.
