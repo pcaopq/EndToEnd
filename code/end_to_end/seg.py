@@ -133,7 +133,7 @@ outname = outfolder + '/' + outname.split('/')[-1]
 scrapedname = xmlname+'.scraped.txt'
 titlesname = xmlname+'.titles.txt'
 textsname = xmlname+'.texts.txt'
-test.readxml(xmlname,scrapedname)
+test.readxml(xmlname,imagename, scrapedname)
 contents,coordinates,heights = parse(scrapedname)
 titlestrips,textstrips = getstrips(contents,coordinates,heights)
 titleblocks = gettitleblocks(titlestrips)
@@ -147,6 +147,7 @@ articleblocks = group_textblocks(len(titleblocks),assignments)
 #    for coor in articleblocks:
 #        f.write('%f %f %f %f\n' % tuple(coor[i][j] for i in range(2) for j in range(2)))
 
+
 anns = []
 for j,((y,x),(h,w)) in enumerate(titleblocks):
    anns.append({"class": "title", 
@@ -158,7 +159,7 @@ for j,((y,x),(h,w)) in enumerate(titleblocks):
                 "y": y})
 for j,ab in enumerate(articleblocks):
    for ((y,x),(h,w)) in ab:
-      anns.append({"class": "text", 
+      anns.append({"class": "article", 
                    "height": h-y,
                    "id": str(j), 
                    "type": "rect", 

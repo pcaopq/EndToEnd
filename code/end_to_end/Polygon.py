@@ -8,7 +8,7 @@ class Polygon:
         area-calculations will be weighted by that object's blackness values.
     '''
     weight_image = None
-    def __init__(self, boxes=[], label='text', string=None):
+    def __init__(self, boxes=[], label='article', string=None):
         self.label=label
         if string is not None: self.from_str(string)
         else: self.boxes = boxes

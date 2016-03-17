@@ -48,6 +48,7 @@ def seg_from_json(fname, gt_flag):
 
 	# convert polygons dict to Segmentation object
 	#seg = Segmentation()
+
 	polygons = [Polygon(boxes=boxList) for boxList in polygon_dict.values()]
 	return Segmentation(segments=polygons)
 	# print seg.segs

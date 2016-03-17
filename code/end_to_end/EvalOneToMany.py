@@ -6,9 +6,9 @@ import re
 from readJSON import *
 
 NUM_CLASS = 3 # the number of classes, including title, text and other
-ONETOONE_THRESHOLD = 0.85 # a specific manually decided threshold to classify each segmentation
+ONETOONE_THRESHOLD = 0.8 # a specific manually decided threshold to classify each segmentation
 ONETOMANY_THRESHOLD  = 0.1 # a specific manually decided threshold to classify each segmentation
-LABELS = ['text', 'title', 'other']
+LABELS = ['article', 'title', 'graphics']
 
 class EvalOneToMany:
 
@@ -53,18 +53,18 @@ class EvalOneToMany:
 
 		# compute number of segments for each class in ground truth
 		for i, p in enumerate(self.ground_truth.segs):
-			if p.label == 'text':
+			if p.label == LABELS[0]:
 				N[0] += 1
-			elif p.label == 'title':
+			elif p.label == LABELS[1]:
 				N[1] += 1
 			else:
 				N[2] += 1
 
 		# compute number of segments for each class in guess
 		for i, p in enumerate(self.seg_to_eval.segs):
-			if p.label == 'text':
+			if p.label == LABELS[0]:
 				M[0] += 1
-			elif p.label == 'title':
+			elif p.label == LABELS[1]:
 				M[1] += 1
 			else:
 				M[2] += 1

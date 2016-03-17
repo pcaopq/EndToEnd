@@ -10,7 +10,7 @@ class EndToEnd:
          python dilate_segmenter.py <imagename> <segmentation_output_path> 
          <xmlname> <outname>
         e.g.
-         python dilate_segmenter.py 0005.jp2 ../../output/segment 
+         python textblocksBS.py 0005.jp2 ../../output/segment 
          0005.xml 0005.result.json
 
         assumes evaluation metric takes command line arguments as follows:
@@ -47,7 +47,7 @@ class EndToEnd:
                                 print 'invalid implementation file name'
                                 continue
                             command = 'python %s %s %s %s %s' % ((imp_name, self.seg_out_path,) +
-                                  tuple(fname+'/'+f+ext for ext in ('.jpg','.xml','.result.json')))
+                                  tuple(fname+'/'+f+ext for ext in ('.jpg','.xml','.'+imp_name+'.result.json')))
                             print command
                             os.system(command)                    
             else:
@@ -57,7 +57,7 @@ class EndToEnd:
                         print 'invalid implementation file name'
                         continue
                     command = 'python %s %s %s %s %s' % ((imp_name, self.seg_out_path,) +
-                          tuple(f+ext for ext in ('.jpg','.xml','.json')))
+                          tuple(f+ext for ext in ('.jpg','.xml','.'+imp_name+'.result.json')))
                     print command
                     os.system(command)
 
@@ -75,7 +75,7 @@ class EndToEnd:
                                     print 'invalid implementation file name'
                                     continue
                                 command = 'python %s %s %s %s %s %s %s %s' % ((metric_name, self.eval_out_path, self.seg_out_path,) +
-                                      tuple(fname+'/'+f+ext for ext in ('.json', '.result.json', '.jpg', '.xml'))+(imp_name,))
+                                      tuple(fname+'/'+f+ext for ext in ('.json', '.'+imp_name+'.result.json', '.jpg', '.xml'))+(imp_name,))
                                 print command
                             os.system(command)
                 else:
@@ -85,7 +85,7 @@ class EndToEnd:
                             print 'invalid implementation file name'
                             continue
                         command = 'python %s %s %s %s %s %s %s %s' % ((metric_name, self.eval_out_path, self.seg_out_path,) +
-                              tuple(f+ext for ext in ('.json', '.result.json', '.jpg', '.xml'))+(imp_name,))
+                              tuple(f+ext for ext in ('.json', '.'+imp_name+'.result.json', '.jpg', '.xml'))+(imp_name,))
                         print command
                     os.system(command)                    
 
