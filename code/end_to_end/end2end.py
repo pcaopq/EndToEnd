@@ -6,10 +6,20 @@ sys.path.insert(0, './latex_generator')
 from report_generator import *
 
 class EndToEnd:
-    '''assumes segmentation algo.s take command line arguments as follows:
-         python dilate_segmenter.py <imagename> <xmlname> <outname>
-      e.g.
-         python dilate_segmenter.py 0005.jp2 0005.xml 0005_seg.json
+    ''' assumes segmentation algo.s take command line arguments as follows:
+         python dilate_segmenter.py <imagename> <segmentation_output_path> 
+         <xmlname> <outname>
+        e.g.
+         python dilate_segmenter.py 0005.jp2 ../../output/segment 
+         0005.xml 0005.result.json
+
+        assumes evaluation metric takes command line arguments as follows:
+         python evaluation_metric.py <evaluation_output_path>
+         <segmentation_output_path> <ground_truth> <segmentation_result> 
+         <imagename> <xmlname>
+         e.g.
+         python evaluation.py ../../output/eval ../../output/segment 
+         0005.json 0005.result.json 0005.jpg 0005.xml
     '''
     def __init__(self, config_filename='config.txt'):
         with open(config_filename) as f:
