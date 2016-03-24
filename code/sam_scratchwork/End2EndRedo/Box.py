@@ -14,8 +14,9 @@ class Box:
             miny, minx, maxy, maxx = args
             self.coors = [[miny, minx], [maxy, maxx]]
         else:
-            assert(len(args)==1)
-            self.coors = args[0]
+            assert(len(args)==1); arg=args[0]
+            assert(type(arg) in (type([]),type({})))
+            self.coors = arg if type(arg) is type([]) else self.from_dict(arg)
         self.ensure_maxcoor_exceeds_mincoor_on_both_axes() #Notable documentation technique.
     def ensure_maxcoor_exceeds_mincoor_on_both_axes(self):
         self.coors[1] = [max(self.coors[i][j] for i in range(2)) for j in range(2)]
@@ -72,3 +73,18 @@ class Box:
         '''
         if other in self: return [self]
         return [other] + self.minus(other)
+
+    def from_dict(self,json):
+        y,x,h,w = (json[key] for key in ('y','x','height','width'))
+        self.coors = [[y,x],[y+h,x+w]]
+    def to_dict(self, article_id, content_class): #TODO: better name for `content_class` is `label`?
+        '''content_class is `title` or `text`''''
+        return {
+            'id': str(article_id),
+            'class': content_class,
+            'y': self.coors[0][1],
+            'x': self.coors[0][0],
+            'height': self.coors[1][0]-self.coors[0][0],
+            'width': self.coors[1][1]-self.coors[0][1],
+            'type': 'rect'
+        }
