@@ -59,5 +59,11 @@ class Box:
         return (D0,D1,D2,D3)
     def minus(self, other):
         '''returns partition of the points in `self` but not in `other`
-           as a list of disjoint boxes (empty if self in other)'''
+           as a list (empty if self in other) of disjoint boxes'''
         return filter(self.meet(D) for D in other.windmill())
+    def refine(self, other):
+        '''returns partition of the points in `self.join(other)`
+           as a list of disjoint boxes, each
+           (in or disjoint from `self`) and (in or disjoint from `other`)'''
+        if other in self: return [self]
+        return [other] + self.minus(other)

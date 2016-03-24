@@ -11,7 +11,7 @@ class Polygon:
             b, self.boxes = self.boxes[0], self.boxes[1:]
             for nb in newboxes:
                 if b.overlaps(nb):
-                    self.boxes.append(b.minus(nb))
+                    self.boxes += b.refine(nb)
                     break
             else:
                 newboxes.append(b)
