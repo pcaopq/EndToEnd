@@ -4,19 +4,19 @@ from functools import reduce
 
 class Box:
     def __init__(self, *args):
-       '''A `Box` is a axis-aligned rectangle, initialized
-          either from *(miny, minx, maxy, maxx)
-          or from [[miny, minx], [maxy,maxx]].
-          The latter form is also used for its internal representation.
-          Its coordinates are in units of .jp2 pixels.
-       '''
-       if len(args)==4:
-           miny, minx, maxy, maxx = args
-           self.coors = [[miny, minx], [maxy, maxx]]
-       else:
-           assert(len(args)==1)
-           self.coors = args[0]
-       self.ensure_maxcoor_exceeds_mincoor_on_both_axes() #Notable documentation technique.
+        '''A `Box` is a axis-aligned rectangle, initialized
+           either from *(miny, minx, maxy, maxx)
+           or from [[miny, minx], [maxy,maxx]].
+           The latter form is also used for its internal representation.
+           Its coordinates are in units of .jp2 pixels.
+        '''
+        if len(args)==4:
+            miny, minx, maxy, maxx = args
+            self.coors = [[miny, minx], [maxy, maxx]]
+        else:
+            assert(len(args)==1)
+            self.coors = args[0]
+        self.ensure_maxcoor_exceeds_mincoor_on_both_axes() #Notable documentation technique.
     def ensure_maxcoor_exceeds_mincoor_on_both_axes(self):
         self.coors[1] = [max(self.coors[i][j] for i in range(2)) for j in range(2)]
     def area(self, newspage=None):
