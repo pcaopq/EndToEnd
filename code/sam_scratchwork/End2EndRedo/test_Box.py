@@ -7,6 +7,9 @@ from Box import Box
 class TestBox(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         unittest.TestCase.__init__(self, *args, **kwargs)
+        self.badzero = Box(0,0,-1,-1)
+        self.fancyzero = Box([[0,0],[0,0]])
+        self.fancybadzero = Box([[0,0],[-1,-1]])
         self.zero = Box(0,0,0,0)
         self.square = Box(0,0,1,1)
         self.up= Box(1,0,2,1)
@@ -20,6 +23,10 @@ class TestBox(unittest.TestCase):
         self.all = Box(0,0,2,2)
         self.silouhette = Box(0,0,2,0)
         self.shadow = Box(0,0,0,2)
+    def test_init(self):
+        self.assertEqual(self.zero, self.badzero)
+        self.assertEqual(self.zero, self.fancyzero)
+        self.assertEqual(self.zero, self.fancybadzero)
     def test_area(self):
         self.assertEqual(self.zero.area(), 0.0)
         self.assertEqual(self.square.area(), 1.0)
