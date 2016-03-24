@@ -64,6 +64,7 @@ class TestBox(unittest.TestCase):
         self.assertEqual(self.silouhette.meet(self.shadow), self.zero)
         self.assertEqual(self.tallthin.meet(self.shortwide), self.small)
         self.assertEqual(self.square.meet(self.upright), self.nothing)
+        #TODO: test the meet of disjoint, far boxes!
     def test_overlaps(self):
         #measure-0 intersections don't count as overlaps:
         self.assertFalse(self.zero.overlaps(self.square))
@@ -121,6 +122,8 @@ class TestBox(unittest.TestCase):
         self.assertTrue(self.shortwide)
         self.assertTrue(self.tallthin)
         self.assertTrue(self.center)
+    def test_minus(self):
+        pass #TODO
 
 if __name__=='__main__':
     unittest.main()

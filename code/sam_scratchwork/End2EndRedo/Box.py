@@ -1,6 +1,6 @@
 '''@author Samuel Tenka
 '''
-from functools import reduce
+from functools import reduce, filter
 
 class Box:
     def __init__(self, *args):
@@ -48,3 +48,16 @@ class Box:
     def __eq__(self, other):
         '''checks equality'''
         return self.coors == other.coors
+
+    def windmill(self):
+        '''returns a partition of the box's complement into 4 quarter-planes'''
+        (miny, minx), (maxy, maxx) = self.coors
+        D0 = [[maxy,-inf],[inf,maxx]]
+        D1 = [[-inf,-inf],[maxy,minx]]
+        D2 = [[-inf,minx],[miny,inf]]
+        D3 = [[miny,maxx],[inf,inf]]
+        return (D0,D1,D2,D3)
+    def minus(self, other):
+        '''returns partition of the points in `self` but not in `other`
+           as a list of disjoint boxes (empty if self in other)'''
+        return filter(self.meet(D) for D in other.windmill())
