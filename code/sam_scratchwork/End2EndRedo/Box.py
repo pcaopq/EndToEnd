@@ -55,15 +55,16 @@ class Box:
         '''Returns a partition of the box's complement into 4 quarter-planes.
            This has applications to methods `minus` and (hence) `refine` below.'''
         (miny, minx), (maxy, maxx) = self.coors
+        inf = float('inf')
         D0 = [[maxy,-inf],[inf,maxx]]
         D1 = [[-inf,-inf],[maxy,minx]]
         D2 = [[-inf,minx],[miny,inf]]
         D3 = [[miny,maxx],[inf,inf]]
-        return (D0,D1,D2,D3) #TODO: can we express above more elegantly?
+        return tuple(Box(D) for D in (D0,D1,D2,D3)) #TODO: can we express above more elegantly?
     def minus(self, other):
         '''Returns a partition of the points in `self` but not in `other`
            as a list (empty if self in other) of disjoint boxes.'''
-        return filter(self.meet(D) for D in other.windmill())
+        return list(filter(None,(self.meet(D) for D in other.windmill())))
     def refine(self, other):
         '''Returns a partition of the points in `self.join(other)`
            as a list of disjoint boxes, each:
@@ -78,7 +79,7 @@ class Box:
         y,x,h,w = (json[key] for key in ('y','x','height','width'))
         self.coors = [[y,x],[y+h,x+w]]
     def to_dict(self, article_id, content_class): #TODO: better name for `content_class` is `label`?
-        '''content_class is `title` or `text`''''
+        '''content_class is `title` or `text`'''
         return {
             'id': str(article_id),
             'class': content_class,

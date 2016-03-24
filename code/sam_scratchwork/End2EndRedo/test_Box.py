@@ -3,6 +3,7 @@
 
 import unittest
 from Box import Box
+from Polygon import Polygon
 
 class TestBox(unittest.TestCase):
     def __init__(self, *args, **kwargs):
@@ -12,8 +13,9 @@ class TestBox(unittest.TestCase):
         self.fancybadzero = Box([[0,0],[-1,-1]])
         self.zero = Box(0,0,0,0)
         self.square = Box(0,0,1,1)
-        self.up= Box(1,0,2,1)
+        self.up = Box(1,0,2,1)
         self.upright = Box(1,1,2,2)
+        self.right = Box(0,1,1,2)
         self.center = Box(0.5,0.5,1.5,1.5)
         self.tallthin = Box(0.25,0.75,1.75,1.25)
         self.shortwide = Box(0.75,0.25,1.25,1.75)
@@ -123,7 +125,26 @@ class TestBox(unittest.TestCase):
         self.assertTrue(self.tallthin)
         self.assertTrue(self.center)
     def test_minus(self):
-        pass #TODO
+        ams = Polygon(self.all.minus(self.square))
+        amc = Polygon(self.all.minus(self.center))
+        uurr = Polygon([self.up, self.upright, self.right])
+        self.assertTrue(ams == uurr)
+        self.assertTrue(ams.area() == uurr.area())
+        self.assertFalse(amc == uurr)
+        self.assertTrue(amc.area() == uurr.area())
 
+        swmtt = Polygon(self.shortwide.minus(self.tallthin))
+        ttmsw = Polygon(self.tallthin.minus(self.shortwide))
+        ttmc = Polygon(self.tallthin.minus(self.center))
+        ttms = Polygon(self.tallthin.minus(self.small))
+        self.assertFalse(ttmsw==swmtt)
+        self.assertTrue(ttmsw==ttms)
+        self.assertFalse(ttms==ttmc)
+    def test_refine(self):
+        pass #TODO
+    def test_from_dict(self):
+        pass #TODO
+    def test_to_dict(self):
+        pass #TODO
 if __name__=='__main__':
     unittest.main()

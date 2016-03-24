@@ -5,7 +5,7 @@ class Polygon:
        represented as a disjoint union of Boxes.
     '''
     def __init__(self,boxes, is_disjoint=False):
-        self.boxes=filter(boxes)
+        self.boxes=list(filter(None,boxes))
         if not is_disjoint: self.remove_internal_overlaps()
     def remove_internal_overlaps(self):
         '''Ensures disjointness of component boxes while preserving their union,
@@ -15,15 +15,16 @@ class Polygon:
         while self.boxes:
             b, self.boxes = self.boxes[0], self.boxes[1:]
             for nb in newboxes:
-                if b.overlaps(nb):
-                    self.boxes += b.refine(nb)
-                    break
+                if not b.overlaps(nb): continue
+                self.boxes += b.refine(nb)
+                newboxes.remove(nb)
+                break
             else:
                 newboxes.append(b)
         self.boxes=newboxes
-    def union(self, other):
+    def union(self, other, is_disjoint=False):
         '''Returns set of points in at least one input region, as a Polygon.'''
-        return Polygon(self.boxes+other.boxes)
+        return Polygon(self.boxes+other.boxes, is_disjoint)
     def intersect(self, other):
         '''Returns set of points in both input regions, as a Polygon.'''
         return Polygon([bs.meet(bo) for bs in self.boxes for bo in other.boxes], is_disjoint=True)
@@ -58,3 +59,5 @@ class Polygon:
             for bo in other.boxes:
                 if bs.overlaps(bo): return True
         return False
+    def __eq__(self,other):
+        return self.union(other).area()==self.intersect(other).area()
