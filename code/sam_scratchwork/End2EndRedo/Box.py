@@ -19,6 +19,9 @@ class Box:
             if type(arg) is type({}): self.from_dict(arg)
             else: self.coors = arg
         self.ensure_maxcoor_exceeds_mincoor_on_both_axes() #Notable documentation technique.
+    def __repr__(self):
+        '''String representation for debugging purposes.'''
+        return str(self.coors)
     def ensure_maxcoor_exceeds_mincoor_on_both_axes(self):
         self.coors[1] = [max(self.coors[i][j] for i in range(2)) for j in range(2)]
     def area(self, newspage=None):

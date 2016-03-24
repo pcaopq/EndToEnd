@@ -18,6 +18,11 @@ class Segmentation:
         '''Ensures disjointness of component polygons
            (by removing all inter-polygon intersections).
         '''
+        #polygons = [p for a in self.articles for p in a.polygons_by_type.values()]
+        #for p in polygons:
+        #    p.remove(Polygon([Box(50,50,100,100)]))
+        #return
+
         polygons = [p for a in self.articles for p in a.polygons_by_type.values()]
         intersections = {i:[] for i in range(len(polygons))}
         for i,p in enumerate(polygons):
@@ -40,10 +45,15 @@ class Segmentation:
     def write_to(self, json_name, image_name):
         json = [{'annotations': [b.to_dict(article_id=i, content_class=c)
                                  for i,a in enumerate(self.articles)
-                                 for c,p in a.polygons_by_type.keys()
+                                 for c,p in a.polygons_by_type.items()
                                  for b in p.boxes],
                  'class':'image',
                  'filename': image_name
                 }] #perhaps have an filename_class?
         with open(json_name,'w') as f:
-            f.write(str(json))
+            f.write(str(json).replace("'",'"')
+                             .replace(', ', ',\n\t')
+                             .replace('{', '{\n\t')
+                             .replace('}', '\n}')
+                             .replace('[', '[\n')
+                             .replace(']', '\n]'))

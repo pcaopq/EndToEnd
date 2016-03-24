@@ -11,20 +11,20 @@
                 "type": "rect"
             },
             {
-                "class": "title",
+                "class": "text",
                 "id": "0",
-                "y": 90,
-                "x": 10,
+                "y": 100,
+                "x": 0,
                 "height": 200,
                 "width": 200,
                 "type": "rect"
             },
             {
                 "class": "text",
-                "id": "0",
-                "y": 10,
-                "x": 90,
-                "height": 400,
+                "id": "1",
+                "y": 0,
+                "x": 100,
+                "height": 300,
                 "width": 200,
                 "type": "rect"
             },
