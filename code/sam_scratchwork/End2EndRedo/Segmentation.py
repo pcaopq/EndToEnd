@@ -3,6 +3,10 @@
 
 from collections import defaultdict
 
+from Box import Box
+from Polygon import Polygon
+from Article import Article
+
 class Segmentation:
     '''A `Segmentation`'''
     def __init__(self, json_name=None):
@@ -28,15 +32,16 @@ class Segmentation:
     def read_from(self, json_name):
         with open(json_name) as f:
             json = eval(f.read())
-        boxlists_by_idclass = defaultdict(list) #unknown key will map to empty list
-        for d in json['annotations']:
-            boxlists_by_idclass[(d['id'],d['class'])].append(Box(d))
+        boxlists_by_idclass = defaultdict(lambda: defaultdict(list)) #unknown key will map to empty list
+        for d in json[0]['annotations']:
+            boxlists_by_idclass[d['id']][d['class']].append(Box(d))
+        self.articles = [Article({c:Polygon(bl) for c,bl in cbl.items()}) for i,cbl in boxlists_by_idclass.items()]
     def write_to(self, json_name, image_name):
         json = [{'annotations': [b.to_dict(article_id=i, content_class=c)
                                  for i,a in enumerate(self.articles)
                                  for c,p in a.polygons_by_type.keys()
-                                 for b in p.boxes]
-                 'class':'image'
+                                 for b in p.boxes],
+                 'class':'image',
                  'filename': image_name
                 }] #perhaps have an filename_class?
         with open(json_name,'w') as f:
