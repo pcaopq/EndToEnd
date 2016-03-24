@@ -1,0 +1,35 @@
+[
+    {
+        "annotations": [
+            {
+                "class": "text",
+                "id": "0",
+                "y": 0,
+                "x": 0,
+                "height": 200,
+                "width": 200,
+                "type": "rect"
+            },
+            {
+                "class": "title",
+                "id": "0",
+                "y": 90,
+                "x": 10,
+                "height": 200,
+                "width": 200,
+                "type": "rect"
+            },
+            {
+                "class": "text",
+                "id": "0",
+                "y": 10,
+                "x": 90,
+                "height": 400,
+                "width": 200,
+                "type": "rect"
+            },
+        ],
+        "class": "image",
+        "filename": "test.jp2"
+    }
+]

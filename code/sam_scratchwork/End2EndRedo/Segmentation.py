@@ -5,8 +5,10 @@ from collections import defaultdict
 
 class Segmentation:
     '''A `Segmentation`'''
-    def __init__(self):
+    def __init__(self, json_name=None):
         self.articles = []
+        if json_name is not None:
+            self.read_from(json_name)
     def shrink(self):
         '''Ensures disjointness of component polygons
            (by removing all inter-polygon intersections).
