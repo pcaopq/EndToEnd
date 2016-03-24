@@ -1,6 +1,9 @@
 '''@author Samuel Tenka
 '''
 class Polygon:
+    '''A `Polygon` is a region in the plane,
+       represented as a disjoint union of Boxes.
+    '''
     def __init__(self,boxes):
         self.boxes=filter(boxes)
         self.remove_internal_overlaps()

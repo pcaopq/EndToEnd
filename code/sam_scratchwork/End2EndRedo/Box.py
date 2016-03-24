@@ -4,7 +4,7 @@ from functools import reduce
 
 class Box:
     def __init__(self, *args):
-       '''A Box is a axis-aligned rectangle, initialized
+       '''A `Box` is a axis-aligned rectangle, initialized
           either from *(miny, minx, maxy, maxx)
           or from [[miny, minx], [maxy,maxx]].
           The latter form is also used for its internal representation.
