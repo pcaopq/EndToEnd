@@ -12,4 +12,4 @@ class Article:
             title_polygons, text_polygons = args
             self.polygons_by_type = {'title':title_polygon, 'text':text_polygon}
         else:
-            self.polygons_by_type = args
+            self.polygons_by_type = args[0]

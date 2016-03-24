@@ -13,6 +13,7 @@ class Segmentation:
         self.articles = []
         if json_name is not None:
             self.read_from(json_name)
+        self.shrink()
     def shrink(self):
         '''Ensures disjointness of component polygons
            (by removing all inter-polygon intersections).
@@ -27,7 +28,7 @@ class Segmentation:
                 intersections[i].append(I)
                 intersections[j].append(I)
         for i,p in enumerate(polygons):
-            for ii in intersections(p):
+            for ii in intersections[i]:
                p.remove(ii)
     def read_from(self, json_name):
         with open(json_name) as f:

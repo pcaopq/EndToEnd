@@ -37,13 +37,13 @@ class Polygon:
             b, self.boxes = self.boxes[0], self.boxes[1:]
             for j,bo in enumerate(other.boxes):
                 if not b.overlaps(bo): continue
-                newboxes += Polygon(b.minus(bo)).minus(Polygon(other.boxes[j+1:]))
+                newboxes += Polygon(b.minus(bo)).minus(Polygon(other.boxes[j+1:])).boxes
             else:
                 newboxes.append(b)
         return Polygon(newboxes)
     def remove(self, other):
         '''Shrinks `self` so as not to include any points in `other`.'''
-        self.coors = self.minus(other).coors
+        self.boxes = self.minus(other).boxes
     def area(self, newspage=None):
         '''Counts interior pixels, potentially weighted by pixel values.
            Optional argument `newspage` is of type NewsPage.
