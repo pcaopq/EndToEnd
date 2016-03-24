@@ -31,6 +31,7 @@ def size_of_image(image_name):
     im=Image.open(image_name)
     return im.size[::-1] #[height,width]
 
+from random import random
 class ResizingCanvas(Canvas):
     ''' A subclass of Canvas for dealing with resizing of windows
         Thanks to
@@ -43,45 +44,51 @@ class ResizingCanvas(Canvas):
         self.width = self.winfo_reqwidth()
 
     def on_resize(self,event):
-        hscale = float(event.height)/self.height
-        wscale = float(event.width)/self.width
+        scale_h = float(event.height)/self.height
+        scale_w = float(event.width)/self.width
         self.height = event.height
         self.width = event.width
         # rescale all the objects tagged with the "all" tag
-        self.scale("all",0,0,wscale,hscale)
-        self.get(self.imageid)
+        self.scale("all",0,0,scale_w,scale_h)
 
 class Visualizer:
-    def __init__(self,image_name):
+    def __init__(self,image_name,segmentation):
         self.setup_gui()
-        h,w = size_of_image(image_name)
-        self.hs,self.ws = 640.0/h,480.0/w
+        self.image_name = image_name
+        self.segmentation = segmentation
     def setup_gui(self):
         self.master = Tk()
         self.canvas = ResizingCanvas(self.master, height=640+2, width=480+2)
         self.canvas.pack(fill=BOTH,expand=YES)
+        b = Button(self.master, text="display", command=self.display)
+        b.pack()
     def refresh_canvas(self):
         self.canvas.delete('all')
     def draw_box(self, box, color, content_class, activewidth=3):
-        (y,x),(Y,X) = box.coors
+        (y,x),(Y,X) = box.coors; hs,ws = self.scale_h, self.scale_w
         st,ast = ('gray75','gray50') if content_class=='title' else ('gray25','gray12')
-        self.canvas.create_rectangle(x*self.ws+1,y*self.hs+1,X*self.ws+1,Y*self.hs+1, fill=color, stipple=st, activestipple=ast, activewidth=activewidth)
-    def display(self, segmentation):
+        self.canvas.create_rectangle(x*ws+1,y*hs+1,X*ws+1,Y*hs+1,
+                                     fill=color, stipple=st, activestipple=ast, activewidth=activewidth)
+    def display(self):
         self.refresh_canvas()
-        self.load_background('0003.jpg')
-        for a,col in zip(segmentation.articles,generate_colors()):
+        h,w = size_of_image(self.image_name)
+        self.scale_h,self.scale_w = self.canvas.height/h,self.canvas.width/w
+        self.load_background()
+
+        for a,col in zip(self.segmentation.articles,generate_colors()):
             for content_class, p in a.polygons_by_type.items():
                 if content_class not in ('title','article'):continue
                 for b in p.boxes:
                     self.draw_box(b, col, content_class)
         mainloop()
-    def load_background(self, image_name):
-        self.image = Image.open(image_name)
-        self.image = self.image.resize((480, 640), Image.ANTIALIAS)
+    def load_background(self):
+        h,w = self.canvas.height,self.canvas.width#self.canvas.winfo_reqheight(), self.canvas.winfo_reqwidth()
+        self.image = Image.open(self.image_name)
+        self.image = self.image.resize((w, h), Image.ANTIALIAS)
         self.image = ImageTk.PhotoImage(self.image)
-        self.canvas.create_image(480/2 + 1,640/2 + 1, image=self.image, tag='image')
+        self.canvas.create_image(w/2 + 1,h/2 + 1, image=self.image, tag='image')
 
 from Segmentation import Segmentation
 S = Segmentation('0003.json')
-V = Visualizer('0003.jpg')
-V.display(S)
+V = Visualizer('0003.jpg',S)
+V.display()
