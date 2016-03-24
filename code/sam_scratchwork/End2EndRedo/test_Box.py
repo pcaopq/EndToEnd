@@ -95,6 +95,32 @@ class TestBox(unittest.TestCase):
         self.assertTrue(self.big.overlaps(self.small))
         self.assertTrue(self.tallthin.overlaps(self.shortwide))
         self.assertTrue(self.shortwide.overlaps(self.tallthin))
+    def test_containment(self):
+        #compare measure-0 sets:
+        self.assertTrue(self.shadow in self.shadow)
+        self.assertFalse(self.shadow in self.zero)
+        self.assertTrue(self.zero in self.shadow)
+        self.assertTrue(self.zero in self.zero)
+
+        #what contains zero?
+        self.assertFalse(self.zero in self.center)
+        self.assertTrue(self.zero in self.square)
+
+        #compare concentric positive-area boxes:
+        self.assertTrue(self.small in self.center)
+        self.assertFalse(self.center in self.small)
+        self.assertFalse(self.big in self.center)
+        self.assertTrue(self.center in self.big)
+    def test_bool(self):
+        self.assertFalse(self.zero)
+        self.assertFalse(self.silouhette)
+        self.assertFalse(self.shadow)
+        self.assertFalse(self.nothing)
+
+        self.assertTrue(self.all)
+        self.assertTrue(self.shortwide)
+        self.assertTrue(self.tallthin)
+        self.assertTrue(self.center)
 
 if __name__=='__main__':
     unittest.main()
