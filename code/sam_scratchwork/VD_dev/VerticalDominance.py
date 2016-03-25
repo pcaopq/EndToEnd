@@ -214,9 +214,9 @@ for j,ab in enumerate(articleblocks):
                    "x": x,
                    "y": y})
 
-seg = {
+seg = [{
         "annotations": anns,
-      }
+      }]
 
 with open(outname,'w') as f:
    json.dump(seg, f, indent=4)

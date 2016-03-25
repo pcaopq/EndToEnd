@@ -1,0 +1,4 @@
+#define test_width 4
+#define test_height 4
+static char test_bits[] = {
+0x0,0x0,0x0,0x0};

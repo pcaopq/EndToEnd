@@ -1,0 +1,1 @@
+python VerticalDominance.py . 0003.jpg 0003.xml 0003.vd.json
