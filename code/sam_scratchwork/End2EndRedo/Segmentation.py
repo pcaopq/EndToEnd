@@ -18,11 +18,6 @@ class Segmentation:
         '''Ensures disjointness of component polygons
            (by removing all inter-polygon intersections).
         '''
-        #polygons = [p for a in self.articles for p in a.polygons_by_type.values()]
-        #for p in polygons:
-        #    p.remove(Polygon([Box(50,50,100,100)]))
-        #return
-
         polygons = [p for a in self.articles for p in a.polygons_by_type.values()]
         intersections = {i:[] for i in range(len(polygons))}
         for i,p in enumerate(polygons):

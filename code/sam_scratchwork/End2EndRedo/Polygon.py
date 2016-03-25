@@ -5,7 +5,7 @@ class Polygon:
     '''A `Polygon` is a region in the plane,
        represented as a disjoint union of Boxes.
     '''
-    def __init__(self, boxes, is_disjoint=False, newspage=newspage):
+    def __init__(self, boxes, is_disjoint=False, newspage=None):
         '''If `is_disjoint==True`, then we assume the given boxes are
            disjoint, and hence don't bother to `remove_internal_overlaps`.
            Optional argument `newspage` is of type NewsPage.
