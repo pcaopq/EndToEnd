@@ -93,6 +93,7 @@ class Visualizer:
         self.canvas.create_image(w/2 + 1,h/2 + 1, image=self.image, tag='image')
 
 import sys
-jpg,json = sys.argv[1:3]
-V = Visualizer(jpg,json)
-V.display()
+if __name__=='__main__':
+    image_name,json_name = sys.argv[1:3]
+    V = Visualizer(image_name,json_name)
+    V.display()
