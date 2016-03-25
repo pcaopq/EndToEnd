@@ -94,6 +94,7 @@ def getstrips(contents,coordinates,heights):
    for i,(con,coor) in enumerate(zip(contents,coordinates)):
        h = coor[1][0]-coor[0][0]
        (textcoors if h<TH else titlecoors).append(coor)
+   return titlecoors,textcoors
 ''' *** Merges titlestrips horizontally, into long, thin strips *** '''
 def gettitleblocks(titlecoors):
    f=True
@@ -131,17 +132,17 @@ def supports(a,b):
 
 ''' *** Assign Textstrips to Textblocks*** '''
 def assign_textblocks(titlecoors, textcoors):
-   #assignments[titleid] WILL BE [all words that are dominated by that title]
-   assignments = {j:[] for j in range(len(textcoors))}
-   for word in textcoors:
-      try:
-         #find the lowest (i.e. maximum [1][0], i.e. item of upper boundary _farthest_ from upper edge of image)
-         #     the lowest title that dominates given word
-         j = max((title[1][0],j) for j,title in enumerate(titlecoors) if dominates(title,word))[1]
-         assignments[j].append(word)
-     except ValueError: #from trying to take `max` of an empty iterator
-         print('no title dominates [%s]'%str(word))
-   return assignments
+    #assignments[titleid] WILL BE [all words that are dominated by that title]
+    assignments = {j:[] for j in range(len(textcoors))}
+    for word in textcoors:
+        try:
+            #find the lowest (i.e. maximum [1][0], i.e. item of upper boundary _farthest_ from upper edge of image)
+            #     the lowest title that dominates given word
+            j = max((title[1][0],j) for j,title in enumerate(titlecoors) if dominates(title,word))[1]
+            assignments[j].append(word)
+        except ValueError: #from trying to take `max` of an empty iterator
+            print('no title dominates [%s]'%str(word))
+    return assignments
 
 ''' *** Merge Textstrips based on their assignments to TitleBlocks *** '''
 def group_textblocks(N,assignments):
