@@ -9,7 +9,7 @@ import itertools as it
 '''
 
 class Box:
-    ''' A box is an axis-aligned rectangle, represented by [mincoors, maxcoors]
+    ''' A Box is an axis-aligned rectangle, represented by [mincoors, maxcoors]
         For us, coordinates are length-2 lists of form [y, x], in units of
         pixels of the original image.
     '''

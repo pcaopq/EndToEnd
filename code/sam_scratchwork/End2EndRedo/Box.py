@@ -3,13 +3,15 @@
 from functools import reduce
 
 class Box:
-    def __init__(self, *args):
+    def __init__(self, *args, newspage=None):
         '''A `Box` is a axis-aligned rectangle, initialized
            either from *(miny, minx, maxy, maxx)
            or from [[miny, minx], [maxy,maxx]].
            The latter form is also used for its internal representation.
            Its coordinates are in units of .jp2 pixels.
+           Optional argument `newspage` is of type NewsPage.
         '''
+        self.newspage=newspage
         if len(args)==4:
             miny, minx, maxy, maxx = args
             self.coors = [[miny, minx], [maxy, maxx]]
@@ -24,13 +26,11 @@ class Box:
         return str(self.coors)
     def ensure_maxcoor_exceeds_mincoor_on_both_axes(self):
         self.coors[1] = [max(self.coors[i][j] for i in range(2)) for j in range(2)]
-    def area(self, newspage=None):
-        '''Counts interior pixels, potentially weighted by pixel values.
-           Optional argument `newspage` is of type NewsPage.
-        '''
-        if newspage is not None:
+    def area(self):
+        '''Counts interior pixels, potentially weighted by pixel values.'''
+        if self.newspage is not None:
             (miny, minx), (maxy, maxx) = self.coors
-            return newspage.weight_on(miny, minx, maxy, maxx)
+            return self.newspage.weight_on(miny, minx, maxy, maxx)
         return reduce(lambda y,x:y*x, (self.coors[1][i]-self.coors[0][i] for i in range(2)))
     def join(self, other):
         '''Smallest common container.'''
