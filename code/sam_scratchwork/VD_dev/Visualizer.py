@@ -58,7 +58,7 @@ class Visualizer:
         self.setup_gui(image_name, json_name)
     def setup_gui(self, image_name, json_name):
         self.master = Tk()
-        self.canvas = ResizingCanvas(self.master, height=640+2, width=480+2)
+        self.canvas = ResizingCanvas(self.master, height=800+2, width=600+2)
         self.canvas.pack(fill=BOTH,expand=YES)
         b = Button(self.master, text="display", command=self.display); b.pack()
         self.image_name_entry = Entry(self.master); self.image_name_entry.pack()

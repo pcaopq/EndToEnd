@@ -133,7 +133,7 @@ def supports(a,b):
 ''' *** Assign Textstrips to Textblocks*** '''
 def assign_textblocks(titlecoors, textcoors):
     #assignments[titleid] WILL BE [all words that are dominated by that title]
-    assignments = {j:[] for j in range(len(textcoors))}
+    assignments = {j:[] for j in range(len(titlecoors))}
     for word in textcoors:
         try:
             #find the lowest (i.e. maximum [1][0], i.e. item of upper boundary _farthest_ from upper edge of image)
@@ -168,6 +168,30 @@ def group_textblocks(N,assignments):
             words.remove(w)
    return articleblocks
 
+''' *** Used in `group_titleblocks` for Determining whether to identify
+        two titlestrips. extremely weak (i.e. very easy to satisfy; usually true)
+        True if `b` sits on a`.*** '''
+def sitson(a,b):
+    centerxx = lambda ab: (1*ab[0][1]+1*ab[1][1])/2.0
+    xx = lambda ab: lambda xx: ab[0][1]<xx<ab[1][1]
+    return a[1][0]>=b[0][0] and (xx(a)(centerxx(b)) and xx(b)(centerxx(a)))
+def group_titleblocks(titleblocks,assignments):
+   '''vertically merge titleblocks'''
+   title_assignments = list(range(len(titleblocks)))
+   for j,tb in enumerate(titleblocks):
+       if assignments[j]: continue
+       try:
+           #find the highest (i.e. minimum [1][1], i.e. item of lower boundary _nearest_ to upper edge of image)
+           #     the highest title that dominates some word and supports `tb`
+           jj = min((title[1][0],jj) for jj,title in enumerate(titleblocks) if j!=jj and sitson(title,tb))[1]
+           title_assignments[j] = jj
+       except ValueError: #from trying to take `min` of an empty iterator
+           print('no dominating title supports title [%s]'%str(tb))
+   for i in range(len(titleblocks)): #super inefficient LOL
+       for j in range(len(titleblocks)):
+           title_assignments[j] = title_assignments[title_assignments[j]]
+   return title_assignments
+
 ''' *** Putting it all together... ***
 '''
 '''
@@ -192,6 +216,8 @@ titleblocks = gettitleblocks(titlestrips)
 assignments = assign_textblocks(titleblocks,textstrips)
 '''
 *** Step 3: Merge articleblocks based on title *** '''
+title_assignments = group_titleblocks(titleblocks,assignments)
+print(title_assignments)
 articleblocks = group_textblocks(len(titleblocks),assignments)
 '''
 *** Step 4: Write to JSON: *** '''
@@ -199,7 +225,7 @@ anns = []
 for j,((y,x),(h,w)) in enumerate(titleblocks):
    anns.append({"class": "title",
                 "height": h-y,
-                "id": j,
+                "id": str(title_assignments[j]),
                 "type": "rect",
                 "width": w-x,
                 "x": x,
