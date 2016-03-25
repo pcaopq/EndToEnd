@@ -20,4 +20,3 @@ class JP2:
     def weight_on(self, miny, minx, maxy, maxx):
         return weight[maxy][maxx] - weight[miny][maxx] \
                                   - weight[maxy][minx] + weight[miny][minx]
-J = JP2('0003.jpg')
