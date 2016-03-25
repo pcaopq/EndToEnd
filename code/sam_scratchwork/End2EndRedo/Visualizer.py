@@ -51,17 +51,20 @@ class ResizingCanvas(Canvas):
         # rescale all the objects tagged with the "all" tag
         self.scale("all",0,0,scale_w,scale_h)
 
+from Segmentation import Segmentation
 class Visualizer:
-    def __init__(self,image_name,segmentation):
-        self.setup_gui()
-        self.image_name = image_name
-        self.segmentation = segmentation
-    def setup_gui(self):
+    def __init__(self, image_name, json_name):
+        self.setup_gui(image_name, json_name)
+    def setup_gui(self, image_name, json_name):
         self.master = Tk()
         self.canvas = ResizingCanvas(self.master, height=640+2, width=480+2)
         self.canvas.pack(fill=BOTH,expand=YES)
-        b = Button(self.master, text="display", command=self.display)
-        b.pack()
+        b = Button(self.master, text="display", command=self.display); b.pack()
+        self.image_name_entry = Entry(self.master); self.image_name_entry.pack()
+        self.image_name_entry.insert(0,image_name)
+        self.json_name_entry = Entry(self.master); self.json_name_entry.pack()
+        self.json_name_entry.insert(0,json_name)
+
     def refresh_canvas(self):
         self.canvas.delete('all')
     def draw_box(self, box, color, content_class, activewidth=3):
@@ -71,11 +74,12 @@ class Visualizer:
                                      outline=color, fill=color, stipple=st, activestipple=ast, activewidth=activewidth)
     def display(self):
         self.refresh_canvas()
-        h,w = size_of_image(self.image_name)
-        self.scale_h,self.scale_w = self.canvas.height/h,self.canvas.width/w
+        h,w = size_of_image(self.image_name_entry.get())
+        self.scale_h, self.scale_w = self.canvas.height/h, self.canvas.width/w
         self.load_background()
 
-        for a,col in zip(self.segmentation.articles,generate_colors()):
+        seg = Segmentation(self.json_name_entry.get())
+        for a,col in zip(seg.articles,generate_colors()):
             for content_class, p in a.polygons_by_type.items():
                 if content_class not in ('title','article'):continue
                 for b in p.boxes:
@@ -83,12 +87,12 @@ class Visualizer:
         mainloop()
     def load_background(self):
         h,w = self.canvas.height,self.canvas.width#self.canvas.winfo_reqheight(), self.canvas.winfo_reqwidth()
-        self.image = Image.open(self.image_name)
+        self.image = Image.open(self.image_name_entry.get())
         self.image = self.image.resize((w, h), Image.ANTIALIAS)
         self.image = ImageTk.PhotoImage(self.image)
         self.canvas.create_image(w/2 + 1,h/2 + 1, image=self.image, tag='image')
 
-from Segmentation import Segmentation
-S = Segmentation('0003.json')
-V = Visualizer('0003.jpg',S)
+import sys
+jpg,json = sys.argv[1:3]
+V = Visualizer(jpg,json)
 V.display()

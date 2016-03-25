@@ -24,9 +24,9 @@ class  ProcessXML:
 	def __init__(self, fname):
 		self.filename = fname	# .xml file
 		self.textblocks = None 	# list of textblocks
-	
+
 	def getTIFdimensions(self):
-		''' returns (height, width) of the .tif data in the xml file. we will use this 
+		''' returns (height, width) of the .tif data in the xml file. we will use this
 		data to change scales to the .jp2 image size
 		'''
 		xmldoc = minidom.parse(self.filename)
@@ -36,7 +36,7 @@ class  ProcessXML:
 		h = page.getAttribute('HEIGHT')
 		w = page.getAttribute('WIDTH')
 		return (h,w)
-		
+
 	def getTextblocks(self):
 		""" create list of textblocks """
 		xmldoc = minidom.parse(self.filename)
@@ -45,7 +45,7 @@ class  ProcessXML:
 		page = layout.getElementsByTagName('Page')[0]
 		printspace = page.getElementsByTagName('PrintSpace')[0]
 		self.textblocks = printspace.getElementsByTagName('TextBlock')
-		
+
 	def getTextLines(self, textblock):
 		""" loop thru textlines in a textblock """
 		if textblock.getElementsByTagName('TextLine'):
@@ -53,17 +53,17 @@ class  ProcessXML:
 			return textlines
 		else:
 			return False
-			
+
 	def getStrings(self, textline):
 		""" return list of strings from a textline """
 		strings = textline.getElementsByTagName('String')
 		return strings
-	
+
 	def getSpaces(self, textline):
 		""" return a list of spaces from a textline """
 		spaces = textline.getElementsByTagName('SP')
 		return spaces
-	
+
 	def writeStSpData(self, wname):
 		""" write the coordinate data of strings and spaces to wname file """
 		if self.textblocks == None:
@@ -89,7 +89,7 @@ class  ProcessXML:
 						f.write("%s %s %s\n" % (hpos,vpos,width))
 		f.close()
 		return
-	
+
 	def writeTBData(self, wname):
 		""" write the coordinate data of textblocks to wname file """
 		if self.textblocks == None:
@@ -104,7 +104,7 @@ class  ProcessXML:
 					f.write("%f %f %f %f\n" % (hpos,vpos,width,height))
 		f.close()
 		return
-	
+
 	def getTBData(self):
 		''' returns a list of (hpos,vpos,width,height) info for each textblock
 		'''
@@ -119,4 +119,3 @@ class  ProcessXML:
 				height 	= float(tb.getAttribute('HEIGHT'))
 				tbList.append( (hpos,vpos,width,height) )
 		return tbList
-	
