@@ -42,7 +42,7 @@ def readxml(xmlname, imagename, scrapedname):
                         f.write("%s %f %f %f %f\n" % ((S('CONTENT'),)+coor))
                     for sp in sps:
                         L = lambda label:float(string.getAttribute(label))
-                        f.write("%s %s %s\n" % (L('VPOS')*factor[0], 
+                        f.write("%s %s %s\n" % (L('VPOS')*factor[0],
                                                 L('HPOS')*factor[1],
                                                 L('WIDTH')*factor[1]))
             # if textblock.getAttribute('HPOS'):
