@@ -54,11 +54,8 @@ if __name__ == "__main__":
 		tbInfo["id"] = id
 		seg["annotations"].append(tbInfo)
 		id += 1
-	
+
 	# write to json
 	with open( f_out_folder+'/'+f_out, 'w' ) as f:
 		json.dump(seg, f, indent=4)
 	f.close()
-
-
-

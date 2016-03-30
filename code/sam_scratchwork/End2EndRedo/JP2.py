@@ -5,7 +5,7 @@ import numpy as np
 import matplotlib.image as mpimg
 
 class JP2:
-    gamma_default = lambda x: 1.0-(x/255.0)**2
+    gamma_default = lambda x: (1.0-x/(3*255.0))**2 #whitens greys
     def __init__(self, image_name, gamma=gamma_default):
         self.image_name = image_name
         self.gamma = gamma
@@ -14,9 +14,11 @@ class JP2:
         '''presumes .jpg to be grayscale; precomputes area blacknesses
            for more efficient evaluation
         '''
-        self.weight = self.gamma(mpimg.imread(self.image_name))
+        self.weight = mpimg.imread(self.image_name)
+        self.weight = self.gamma(np.sum(self.weight, axis=2)) # convert to grayscale
         self.weight = np.cumsum(self.weight, axis=0)
         self.weight = np.cumsum(self.weight, axis=1)
     def weight_on(self, miny, minx, maxy, maxx):
-        return weight[maxy][maxx] - weight[miny][maxx] \
-                                  - weight[maxy][minx] + weight[miny][minx]
+        maxx-=1; maxy-=1;
+        return self.weight[maxy][maxx] - self.weight[miny][maxx] \
+                                       - self.weight[maxy][minx] + self.weight[miny][minx]

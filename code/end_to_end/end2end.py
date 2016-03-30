@@ -7,18 +7,18 @@ from report_generator import *
 
 class EndToEnd:
     ''' assumes segmentation algo.s take command line arguments as follows:
-         python dilate_segmenter.py <imagename> <segmentation_output_path> 
+         python dilate_segmenter.py <imagename> <segmentation_output_path>
          <xmlname> <outname>
         e.g.
-         python textblocksBS.py 0005.jp2 ../../output/segment 
+         python textblocksBS.py 0005.jp2 ../../output/segment
          0005.xml 0005.result.json
 
         assumes evaluation metric takes command line arguments as follows:
          python evaluation_metric.py <evaluation_output_path>
-         <segmentation_output_path> <ground_truth> <segmentation_result> 
+         <segmentation_output_path> <ground_truth> <segmentation_result>
          <imagename> <xmlname>
          e.g.
-         python evaluation.py ../../output/eval ../../output/segment 
+         python evaluation.py ../../output/eval ../../output/segment
          0005.json 0005.result.json 0005.jpg 0005.xml
     '''
     def __init__(self, config_filename='config.txt'):
@@ -41,24 +41,24 @@ class EndToEnd:
                 for f in os.listdir(fname):
                     temp = f.split('.')
                     if temp[-1] == 'jpg':
-                        f = temp[0] 
+                        f = temp[0]
                         for imp_name in self.implementations:
                             if not os.path.isfile(imp_name):
-                                print 'invalid implementation file name'
+                                #print# 'invalid implementation file name'
                                 continue
                             command = 'python %s %s %s %s %s' % ((imp_name, self.seg_out_path,) +
                                   tuple(fname+'/'+f+ext for ext in ('.jpg','.xml','.'+imp_name+'.result.json')))
-                            print command
-                            os.system(command)                    
+                            #print# command
+                            os.system(command)
             else:
                 f = fname.split('.')[0]
                 for imp_name in self.implementations:
                     if not os.path.isfile(imp_name):
-                        print 'invalid implementation file name'
+                        #print# 'invalid implementation file name'
                         continue
                     command = 'python %s %s %s %s %s' % ((imp_name, self.seg_out_path,) +
                           tuple(f+ext for ext in ('.jpg','.xml','.'+imp_name+'.result.json')))
-                    print command
+                    #print# command
                     os.system(command)
 
     def evaluate(self):
@@ -69,39 +69,39 @@ class EndToEnd:
                     for f in os.listdir(fname):
                         temp = f.split('.')
                         if temp[-1] == 'jpg':
-                            f = temp[0] 
+                            f = temp[0]
                             for metric_name in self.metrics:
                                 if not os.path.isfile(metric_name):
-                                    print 'invalid implementation file name'
+                                    #print# 'invalid implementation file name'
                                     continue
                                 command = 'python %s %s %s %s %s %s %s %s' % ((metric_name, self.eval_out_path, self.seg_out_path,) +
                                       tuple(fname+'/'+f+ext for ext in ('.json', '.'+imp_name+'.result.json', '.jpg', '.xml'))+(imp_name,))
-                                print command
+                                #print# command
                             os.system(command)
                 else:
                     f = fname.split('.')[0]
                     for metric_name in self.metrics:
                         if not os.path.isfile(metric_name):
-                            print 'invalid implementation file name'
+                            #print# 'invalid implementation file name'
                             continue
                         command = 'python %s %s %s %s %s %s %s %s' % ((metric_name, self.eval_out_path, self.seg_out_path,) +
                               tuple(f+ext for ext in ('.json', '.'+imp_name+'.result.json', '.jpg', '.xml'))+(imp_name,))
-                        print command
-                    os.system(command)                    
+                        #print# command
+                    os.system(command)
 
     def collect_data(self):
         ''' read in output data from evaluation metrics
             e.g. assume we have an image file named 0005.jpg, and segmentation algorithm
-            textblocksBS.py, then this function will read data from 0005.jpg.textblcoksBS.py 
+            textblocksBS.py, then this function will read data from 0005.jpg.textblcoksBS.py
             data will be saved in a dictionary in the following format:
             {"textblocksBS.py":
                 {
                     precision:
                     recall:
                     score:
-                    history: 
+                    history:
                     {
-                        (precision1, recall1, score1), 
+                        (precision1, recall1, score1),
                         (precision2, recall2, score2)
                     }
                 }
@@ -120,7 +120,7 @@ class EndToEnd:
                             nfiles += 1
                             history_path = self.eval_out_path+'/'+f+'.'+imp_name+'.out'
                             if not os.path.isfile(history_path):
-                                print 'no evaluation history', history_path
+                                #print# 'no evaluation history', history_path
                                 return
 
                             img_pre, img_rec, img_score = 0.0, 0.0, 0.0
@@ -137,7 +137,7 @@ class EndToEnd:
                     f = fname.split('/')[-1]
                     history_path = self.eval_out_path+'/'+f+'.'+imp_name+'.out'
                     if not os.path.isfile(history_path):
-                        print 'no evaluation history', history_path
+                        #print# 'no evaluation history', history_path
                         return
 
                     img_pre, img_rec, img_score = 0.0, 0.0, 0.0
@@ -149,10 +149,10 @@ class EndToEnd:
                             img_rec += float(numbers[1])
                             img_score += float(numbers[2])
                         eval_history.append((img_pre / len(lines), img_rec / len(lines), \
-                            img_score / len(lines)))                    
-            
+                            img_score / len(lines)))
+
             # calculate the precision, recall, score average for each algorithm
-            print eval_history
+            #print# eval_history
             for r in eval_history:
                 imp_pre += r[0]
                 imp_rec += r[1]
@@ -168,7 +168,7 @@ class EndToEnd:
             alg_result['score'] = imp_score
             alg_result['history'] = eval_history
             self.eval_results[imp_name] = alg_result
-        print self.eval_results
+        #print# self.eval_results
 
     def plot_performance_curve(self):
 

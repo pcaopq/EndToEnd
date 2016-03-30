@@ -5,7 +5,7 @@
 
 from tkinter import *
 
-from random import random as rn
+from random import random, seed
 from math import sqrt, pi
 tri=.8660
 dist = lambda rgb,RGB: sum((c-C)**2 for c,C in zip(rgb,RGB))
@@ -15,10 +15,11 @@ def generate_colors():
        bad flow control and lack of memory-use!),
        but not called from any time-critical functions.
     '''
+    seed(0)
     past_colors = []
     while True:
         max_distance = sqrt(tri/(len(past_colors)+1) / pi)
-        rgb = rn(),rn(),rn()
+        rgb = random(),random(),random()
         rgb=tuple(c/sum(rgb) for c in rgb)
         for pc in past_colors:
             if dist(rgb,pc)<max_distance: break
