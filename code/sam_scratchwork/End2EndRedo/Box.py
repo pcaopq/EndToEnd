@@ -9,7 +9,8 @@ class Box:
            or from [[miny, minx], [maxy,maxx]].
            The latter form is also used for its internal representation.
            Its coordinates are in units of .jp2 pixels.
-           Optional argument `newspage` is of type NewsPage.
+           Optional argument `newspage` is of type NewsPage;
+           if this option is specified, area becomes weighted by black pixels.
         '''
         self.newspage=newspage
         if len(args)==4:
