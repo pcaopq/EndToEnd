@@ -1,35 +1,35 @@
 [
 {
-	"class": "image",
-	"filename": "test.jp2",
 	"annotations": [
 {
-	"class": "article",
-	"type": "rect",
-	"x": 200,
-	"y": 0,
-	"width": 150,
 	"id": "0",
-	"height": 300
-},
-	{
-	"class": "article",
-	"type": "rect",
-	"x": 0,
+	"x": 200,
+	"height": 300,
 	"y": 0,
-	"width": 150,
-	"id": "1",
-	"height": 200
-},
-	{
 	"class": "article",
 	"type": "rect",
-	"x": 0,
-	"y": 200,
-	"width": 150,
+	"width": 150
+},
+	{
 	"id": "1",
-	"height": 100
+	"x": 0,
+	"height": 200,
+	"y": 0,
+	"class": "article",
+	"type": "rect",
+	"width": 150
+},
+	{
+	"id": "1",
+	"x": 0,
+	"height": 100,
+	"y": 200,
+	"class": "article",
+	"type": "rect",
+	"width": 150
 }
-]
+],
+	"class": "image",
+	"filename": "test.jp2"
 }
 ]

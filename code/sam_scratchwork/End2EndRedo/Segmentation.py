@@ -1,6 +1,7 @@
 '''@author Samuel Tenka
 '''
 
+from functools import reduce
 from collections import defaultdict
 
 from Box import Box
