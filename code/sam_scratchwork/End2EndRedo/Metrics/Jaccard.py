@@ -4,9 +4,9 @@ class Jaccard:
     def __init__(self):
         pass
     def precision(self, truth, guess, newspage=None):
-        return sum(max(ga.jaccard_recall(ta) for ga in guess.article_regions()) for ta in truth.article_regions()) / len(truth.articles)
+        return sum(max(ga.jaccard_precision(ta) for ga in guess.article_regions()) for ta in truth.article_regions()) / len(truth.articles)
     def recall(self, truth, guess, newspage=None):
-        return sum(max(ga.jaccard_recall(ta) for ga in guess.article_regions()) for ta in truth.article_regions()) / len(self.articles)
+        return sum(max(ga.jaccard_recall(ta) for ga in guess.article_regions()) for ta in truth.article_regions()) / len(guess.articles)
     def fscore(self, newspage, truth, guess, beta=1.0):
         P = self.precision(newspage, truth, guess)
         R = self.recall(newspage, truth, guess)

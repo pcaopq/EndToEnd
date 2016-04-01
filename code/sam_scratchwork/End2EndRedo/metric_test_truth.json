@@ -13,8 +13,8 @@
             {
                 "class": "article",
                 "id": "1",
-                "y": 0,
-                "x": 150,
+                "y": 200,
+                "x": 0,
                 "height": 100,
                 "width": 100,
                 "type": "rect"
@@ -22,8 +22,8 @@
             {
                 "class": "article",
                 "id": "2",
-                "y": 0,
-                "x": 300,
+                "y": 400,
+                "x": 0,
                 "height": 100,
                 "width": 100,
                 "type": "rect"

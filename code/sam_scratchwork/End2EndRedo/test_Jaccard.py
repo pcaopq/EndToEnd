@@ -14,13 +14,13 @@ class TestJaccard(unittest.TestCase):
         self.jaccard = Jaccard()
         self.newspage = None #Newspage(root)
     def test_precision(self):
-        print(self.jaccard.precision(self.truth, self.truth))
-        print(self.jaccard.precision(self.guess, self.guess))
-        print(self.jaccard.precision(self.truth, self.guess))
-
-        #self.assertEqual(self.zero, self.badzero)
-        #self.assertEqual(self.zero, self.fancyzero)
-        #self.assertEqual(self.zero, self.fancybadzero)
+        self.assertEqual(1.00, self.jaccard.precision(self.truth, self.truth))
+        self.assertEqual(1.00, self.jaccard.precision(self.guess, self.guess))
+        self.assertEqual(0.75, self.jaccard.precision(self.truth, self.guess))
+    def test_recall(self):
+        self.assertEqual(1.00, self.jaccard.recall(self.truth, self.truth))
+        self.assertEqual(1.00, self.jaccard.recall(self.guess, self.guess))
+        self.assertEqual(0.75, self.jaccard.recall(self.truth, self.guess))
 
 if __name__=='__main__':
     unittest.main()
