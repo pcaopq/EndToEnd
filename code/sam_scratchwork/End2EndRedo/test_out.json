@@ -3,31 +3,31 @@
 	"class": "image",
 	"annotations": [
 {
-	"width": 100,
 	"class": "article",
-	"type": "rect",
+	"height": 300,
+	"y": 200,
 	"id": "0",
 	"x": 0,
-	"y": 200,
-	"height": 300
+	"width": 150,
+	"type": "rect"
 },
 	{
-	"width": 100,
 	"class": "article",
-	"type": "rect",
+	"height": 200,
+	"y": 0,
 	"id": "1",
 	"x": 0,
-	"y": 0,
-	"height": 200
+	"width": 150,
+	"type": "rect"
 },
 	{
-	"width": 100,
 	"class": "article",
-	"type": "rect",
+	"height": 100,
+	"y": 0,
 	"id": "1",
 	"x": 200,
-	"y": 0,
-	"height": 100
+	"width": 150,
+	"type": "rect"
 }
 ],
 	"filename": "test.jp2"

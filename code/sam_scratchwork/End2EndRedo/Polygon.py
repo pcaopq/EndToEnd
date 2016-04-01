@@ -54,9 +54,9 @@ class Polygon:
     def remove(self, other):
         '''Shrinks `self` so as not to include any points in `other`.'''
         self.boxes = self.minus(other).boxes
-    def area(self, newspage=None):
+    def area(self):
         '''Counts interior pixels, potentially weighted by pixel values.'''
-        return sum(b.area(newspage) for b in self.boxes)
+        return sum(b.area() for b in self.boxes)
     def __bool__(self):
         return bool(self.area())
     def overlaps(self, other):

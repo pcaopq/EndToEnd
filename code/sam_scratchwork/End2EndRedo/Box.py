@@ -1,9 +1,12 @@
 '''@author Samuel Tenka
 '''
 from functools import reduce
+from GeometrySettings import GeometrySettings
+
+default_geometry_setting = GeometrySettings()
 
 class Box:
-    def __init__(self, geometry_settings, *args):
+    def __init__(self, *args, geometry_settings=default_geometry_setting):
         '''A `Box` is a axis-aligned rectangle, initialized
            either from *(miny, minx, maxy, maxx)
            or from [[miny, minx], [maxy,maxx]].
@@ -34,15 +37,18 @@ class Box:
             return self.geometry_settings.newspage.weight_on(miny, minx, maxy, maxx)
         return reduce(lambda y,x:y*x, (self.coors[1][i]-self.coors[0][i] for i in range(2)))
     def join(self, other):
-        '''Smallest common container.'''
-        return Box(self.geometry_settings, [[m(box.coors[i][j] for box in (self,other)) for j in range(2)]
-                   for i,m in enumerate((min,max))])
+        '''Smallest common container.
+           Geometry settings are inherited from leftmost operand.
+        '''
+        return Box([[m(box.coors[i][j] for box in (self,other)) for j in range(2)]
+                   for i,m in enumerate((min,max))], geometry_settings=self.geometry_settings)
     def meet(self, other):
         '''Largest common containee, i.e. the intersection.
            Note: the case of null intersection will return an area-0 box.
+           Geometry settings are inherited from leftmost operand.
         '''
-        return Box(self.geometry_settings, [[m(box.coors[i][j] for box in (self,other)) for j in range(2)]
-                   for i,m in enumerate((max,min))])
+        return Box([[m(box.coors[i][j] for box in (self,other)) for j in range(2)]
+                   for i,m in enumerate((max,min))], geometry_settings=self.geometry_settings)
     def __contains__(self, other):
         '''Checks whether `self` contains `other` as regions in the plane.'''
         return self == self.join(other)
@@ -67,7 +73,7 @@ class Box:
         D1 = [[-inf,-inf],[maxy,minx]]
         D2 = [[-inf,minx],[miny,inf]]
         D3 = [[miny,maxx],[inf,inf]]
-        return tuple(Box(self.geometry_settings, D) for D in (D0,D1,D2,D3)) #TODO: can we express above more elegantly?
+        return tuple(Box(D, geometry_settings=self.geometry_settings) for D in (D0,D1,D2,D3)) #TODO: can we express above more elegantly?
     def minus(self, other):
         '''Returns a partition of the points in `self` but not in `other`
            as a list (empty if self in other) of disjoint boxes.'''
