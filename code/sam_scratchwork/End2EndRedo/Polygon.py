@@ -69,3 +69,11 @@ class Polygon:
         return False
     def __eq__(self,other):
         return self.union(other).area()==self.intersect(other).area()
+    def jaccard_recall(self, truth):
+        '''amount of truth's area also in self area'''
+        intersect_area = self.intersect(truth).area()
+        return 0 if not intersect_area else intersect_area/truth.area()
+    def jaccard_precision(self, truth):
+        '''amount of self's area also in truth area'''
+        intersect_area = self.intersect(truth).area()
+        return 0 if not intersect_area else intersect_area/self.area()

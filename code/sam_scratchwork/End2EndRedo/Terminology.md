@@ -6,7 +6,7 @@ SYSTEM
 - **evaluation metric** --- a program that compares two given segmentations, producing a numerical similarity score (and potentially more data). May be shortened to `metric`. Preferred over `algorithm`.
 - **segmentation algorithm** --- a program that produces from two . May be shortened to `algorithm`. Preferred over `method`.
 - **guess segmentation** --- output of one of our segmentation algorithms. May be shortened to `guess`.
-- **groundtruth segmentation** --- hand-labeled data to which we compare the `guess segmentations`. May be shortened to `groundtruth`.
+- **groundtruth segmentation** --- hand-labeled data to which we compare the `guess segmentations`. May be shortened to `groundtruth` or `truth`.
 - **newspage** --- a single input datapoint in PQ's database, to be fed into `segmentation algorithm`s. Associated with one physical page of news. Contains both an `image` and `metadata`.
 - **image** --- the visual component of a `newspage`, containing an array of pixel values and no more. Preferred over `jpg` or `jp2`.
 - **metadata** --- the non-visual information of a `newspage`, for instance publication date and textblock coordinates. Preferred over `xml` or `ocr`.

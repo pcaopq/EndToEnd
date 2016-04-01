@@ -39,6 +39,15 @@ class Segmentation:
         for d in json[0]['annotations']:
             boxlists_by_idclass[d['id']][d['class']].append(Box(d,geometry_settings=self.geometry_settings))
         self.articles = [Article({c:Polygon(bl) for c,bl in cbl.items()}) for i,cbl in boxlists_by_idclass.items()]
+    def polygons(self):
+        '''Returns an iterator through each polygon in each article.
+        '''
+        return (p for a in self.articles for p in a.polygons_by_type.values())
+    def article_regions(self):
+        '''Returns an iterator of regions, each
+           a polygon corresponding to one of self's articles.
+        '''
+        return (reduce(lambda x,y:x.union(y), a.polygons_by_type.values()) for a in self.articles)
     def write_to(self, json_name, image_name):
         json = [{'annotations': [b.to_dict(article_id=i, content_class=c)
                                  for i,a in enumerate(self.articles)
@@ -46,7 +55,7 @@ class Segmentation:
                                  for b in p.boxes],
                  'class':'image',
                  'filename': image_name
-                }] #perhaps have an filename_class?
+                }] #TODO: perhaps have an filename_class?
         with open(json_name,'w') as f:
             f.write(str(json).replace("'",'"')
                              .replace(', ', ',\n\t')

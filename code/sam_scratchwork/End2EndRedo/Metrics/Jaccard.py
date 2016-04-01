@@ -1,18 +1,17 @@
 '''@author Samuel Tenka
 '''
 class Jaccard:
-    def __init__(self, newspage, ground_truth, segmentation):
-        self.newspage = newspage
-        self.ground_truth = ground_truth
-        self.segmentation = segmentation
-        '''Design Question:
-              (0) should we pass newspages down, or
-              (1) should each box,polygon,article,and segmentation store (a ptr) to its newspage?
-           (0) has the advantage that we can compute area *with or without*
-           respect to the ground image.
-           On the other hand,
-           (1) has the advantage that we don't have to pass a newspage everytime
-           we want to compute overlap etc.
-           Does (1) have any competing advantages?
-        '''
-        #TODO: resolve above?
+    def __init__(self):
+        pass
+    def poly_precision(self, true_poly, true_poly):
+        '''amount of self area also in truth's area'''
+        intersect_area = self.intersect(truth).area()
+        return 0 if not intersect_area else intersect_area/self.area()
+    def precision(self, newspage, truth, guess):
+        return sum(max(ga.jaccard_recall(ta) for ga in guess.articles()) for ta in truth.articles()) / len(truth.articles)
+    def recall(self, newspage, truth, guess):
+        return sum(max(ga.jaccard_recall(ta) for ga in guess.articles()) for ta in truth.articles()) / len(self.articles)
+    def fscore(self, newspage, truth, guess, beta=1.0):
+        P = self.precision(newspage, truth, guess)
+        R = self.recall(newspage, truth, guess)
+        return (1+beta**2) * (P*R)/(beta**2*P + R)
