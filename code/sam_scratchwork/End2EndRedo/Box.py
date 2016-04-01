@@ -3,7 +3,7 @@
 from functools import reduce
 
 class Box:
-    def __init__(self, *args):
+    def __init__(self, *args, geometry_settings):
         '''A `Box` is a axis-aligned rectangle, initialized
            either from *(miny, minx, maxy, maxx)
            or from [[miny, minx], [maxy,maxx]].
@@ -20,26 +20,29 @@ class Box:
             assert(type(arg) in (type([]),type({})))
             if type(arg) is type({}): self.from_dict(arg)
             else: self.coors = arg
+        self.geometry_settings = geometry_settings
         self.ensure_maxcoor_exceeds_mincoor_on_both_axes() #Notable documentation technique.
+    def ensure_maxcoor_exceeds_mincoor_on_both_axes(self):
+        self.coors[1] = [max(self.coors[i][j] for i in range(2)) for j in range(2)]
     def __repr__(self):
         '''String representation for debugging purposes.'''
         return str(self.coors)
-    def ensure_maxcoor_exceeds_mincoor_on_both_axes(self):
-        self.coors[1] = [max(self.coors[i][j] for i in range(2)) for j in range(2)]
-    def area(self, newspage):
+    def area(self):
         '''Counts interior pixels, potentially weighted by pixel values.'''
-        if newspage is not None:
+        if self.geometry_settings.compute_areas_by_pixel_value:
             (miny, minx), (maxy, maxx) = self.coors
-            return newspage.weight_on(miny, minx, maxy, maxx)
+            return self.geometry_settings.newspage.weight_on(miny, minx, maxy, maxx)
         return reduce(lambda y,x:y*x, (self.coors[1][i]-self.coors[0][i] for i in range(2)))
     def join(self, other):
         '''Smallest common container.'''
-        return Box([[m(box.coors[i][j] for box in (self,other)) for j in range(2)] for i,m in enumerate((min,max))])
+        return Box([[m(box.coors[i][j] for box in (self,other)) for j in range(2)]
+                   for i,m in enumerate((min,max))], self.geometry_settings)
     def meet(self, other):
         '''Largest common containee, i.e. the intersection.
            Note: the case of null intersection will return an area-0 box.
         '''
-        return Box([[m(box.coors[i][j] for box in (self,other)) for j in range(2)] for i,m in enumerate((max,min))])
+        return Box([[m(box.coors[i][j] for box in (self,other)) for j in range(2)]
+                   for i,m in enumerate((max,min))], self.geometry_settings)
     def __contains__(self, other):
         '''Checks whether `self` contains `other` as regions in the plane.'''
         return self == self.join(other)
@@ -64,7 +67,7 @@ class Box:
         D1 = [[-inf,-inf],[maxy,minx]]
         D2 = [[-inf,minx],[miny,inf]]
         D3 = [[miny,maxx],[inf,inf]]
-        return tuple(Box(D) for D in (D0,D1,D2,D3)) #TODO: can we express above more elegantly?
+        return tuple(Box(D, self.geometry_settings) for D in (D0,D1,D2,D3)) #TODO: can we express above more elegantly?
     def minus(self, other):
         '''Returns a partition of the points in `self` but not in `other`
            as a list (empty if self in other) of disjoint boxes.'''

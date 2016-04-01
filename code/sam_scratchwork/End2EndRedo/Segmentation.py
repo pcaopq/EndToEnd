@@ -6,6 +6,7 @@ from collections import defaultdict
 from Box import Box
 from Polygon import Polygon
 from Article import Article
+from GeometrySettings import GeometrySettings
 
 class Segmentation:
     '''A `Segmentation`'''
@@ -13,10 +14,11 @@ class Segmentation:
         self.articles = []
         if json_name is not None:
             self.read_from(json_name)
-        self.shrink()
+        self.geometry_settings = GeometrySettings()
     def shrink(self):
         '''Ensures disjointness of component polygons
            (by removing all inter-polygon intersections).
+           Called by some metrics.
         '''
         polygons = [p for a in self.articles for p in a.polygons_by_type.values()]
         intersections = {i:[] for i in range(len(polygons))}
@@ -35,7 +37,7 @@ class Segmentation:
             json = eval(f.read())
         boxlists_by_idclass = defaultdict(lambda: defaultdict(list)) #unknown key will map to empty list
         for d in json[0]['annotations']:
-            boxlists_by_idclass[d['id']][d['class']].append(Box(d))
+            boxlists_by_idclass[d['id']][d['class']].append(Box(d, self.geometry_settings))
         self.articles = [Article({c:Polygon(bl) for c,bl in cbl.items()}) for i,cbl in boxlists_by_idclass.items()]
     def write_to(self, json_name, image_name):
         json = [{'annotations': [b.to_dict(article_id=i, content_class=c)
