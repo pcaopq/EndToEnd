@@ -81,7 +81,7 @@ class Visualizer:
         seg = Segmentation(self.json_name_entry.get())
         for a,col in zip(seg.articles,generate_colors()):
             for content_class, p in a.polygons_by_type.items():
-                if content_class not in ('title','article'):continue
+                if content_class not in ('title','article'): continue
                 for b in p.boxes:
                     self.draw_box(b, col, content_class)
         mainloop()

@@ -2,7 +2,7 @@
     {
         "annotations": [
             {
-                "class": "text",
+                "class": "article",
                 "id": "0",
                 "y": 0,
                 "x": 0,
@@ -11,7 +11,7 @@
                 "type": "rect"
             },
             {
-                "class": "text",
+                "class": "article",
                 "id": "0",
                 "y": 100,
                 "x": 0,
@@ -20,7 +20,7 @@
                 "type": "rect"
             },
             {
-                "class": "text",
+                "class": "article",
                 "id": "1",
                 "y": 0,
                 "x": 100,
