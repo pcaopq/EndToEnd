@@ -16,6 +16,12 @@ class Segmentation:
         self.articles = []
         if json_name is not None:
             self.read_from(json_name)
+    def attach_to(self, newspage):
+        '''Indicates that area is to be weighted by pixel value.
+           Detaches if newspage==None.
+        '''
+        self.geometry_settings.compute_areas_by_pixel_value = bool(newspage is not None)
+        self.geometry_settings.newspage = newspage
     def shrink(self):
         '''Ensures disjointness of component polygons
            (by removing all inter-polygon intersections).
