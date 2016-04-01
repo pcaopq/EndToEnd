@@ -46,7 +46,7 @@ class Polygon:
             b, oldboxes = oldboxes[0], oldboxes[1:]
             for j,bo in enumerate(other.boxes):
                 if not b.overlaps(bo): continue
-                newboxes += Polygon(b.minus(bo)).minus(Polygon(other.boxes[j+1:])).boxes
+                newboxes += Polygon(b.minus(bo)).minus(Polygon(other.boxes[j+1:])).boxes #TODO: use is_disjoint flag here.
                 break
             else:
                 newboxes.append(b)

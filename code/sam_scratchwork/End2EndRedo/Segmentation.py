@@ -24,11 +24,11 @@ class Segmentation:
         intersections = {i:[] for i in range(len(polygons))}
         for i,p in enumerate(polygons):
             for j,pp in enumerate(polygons[:i]):
-                if not p.overlaps(pp):
-                    continue
+                if not p.overlaps(pp): continue
                 I = p.intersect(pp)
                 intersections[i].append(I)
                 intersections[j].append(I)
+        print(intersections)
         for i,p in enumerate(polygons):
             for ii in intersections[i]:
                p.remove(ii)
@@ -37,7 +37,7 @@ class Segmentation:
             json = eval(f.read())
         boxlists_by_idclass = defaultdict(lambda: defaultdict(list)) #unknown key will map to empty list
         for d in json[0]['annotations']:
-            boxlists_by_idclass[d['id']][d['class']].append(Box(self.geometry_settings, d))
+            boxlists_by_idclass[d['id']][d['class']].append(Box(d,geometry_settings=self.geometry_settings))
         self.articles = [Article({c:Polygon(bl) for c,bl in cbl.items()}) for i,cbl in boxlists_by_idclass.items()]
     def write_to(self, json_name, image_name):
         json = [{'annotations': [b.to_dict(article_id=i, content_class=c)

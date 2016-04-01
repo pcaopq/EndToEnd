@@ -46,7 +46,7 @@ class Box:
         '''Largest common containee, i.e. the intersection.
            Note: the case of null intersection will return an area-0 box.
            Geometry settings are inherited from leftmost operand.
-        '''
+        ''' #TODO: change null intersection case to return *None*
         return Box([[m(box.coors[i][j] for box in (self,other)) for j in range(2)]
                    for i,m in enumerate((max,min))], geometry_settings=self.geometry_settings)
     def __contains__(self, other):
@@ -96,8 +96,8 @@ class Box:
         return {
             'id': str(article_id),
             'class': content_class,
-            'y': self.coors[0][1],
-            'x': self.coors[0][0],
+            'y': self.coors[0][0],
+            'x': self.coors[0][1],
             'height': self.coors[1][0]-self.coors[0][0],
             'width': self.coors[1][1]-self.coors[0][1],
             'type': 'rect'

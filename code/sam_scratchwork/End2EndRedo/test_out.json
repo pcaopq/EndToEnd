@@ -1,35 +1,71 @@
 [
 {
-	"class": "image",
+	"filename": "test.jp2",
 	"annotations": [
 {
-	"class": "article",
-	"height": 300,
-	"y": 200,
+	"class": "title",
+	"type": "rect",
 	"id": "0",
-	"x": 0,
-	"width": 150,
-	"type": "rect"
+	"x": 1650,
+	"width": 1500,
+	"height": 1000,
+	"y": 6100
 },
 	{
-	"class": "article",
-	"height": 200,
-	"y": 0,
-	"id": "1",
-	"x": 0,
-	"width": 150,
-	"type": "rect"
+	"class": "title",
+	"type": "rect",
+	"id": "0",
+	"x": 3150,
+	"width": 1500,
+	"height": 2000,
+	"y": 5100
 },
 	{
-	"class": "article",
-	"height": 100,
-	"y": 0,
+	"class": "title",
+	"type": "rect",
 	"id": "1",
-	"x": 200,
-	"width": 150,
-	"type": "rect"
+	"x": 150,
+	"width": 1500,
+	"height": 2000,
+	"y": 4100
+},
+	{
+	"class": "title",
+	"type": "rect",
+	"id": "1",
+	"x": 1650,
+	"width": 1500,
+	"height": 1000,
+	"y": 4100
+},
+	{
+	"class": "title",
+	"type": "rect",
+	"id": "2",
+	"x": 150,
+	"width": 3000,
+	"height": 2000,
+	"y": 100
+},
+	{
+	"class": "title",
+	"type": "rect",
+	"id": "2",
+	"x": 1650,
+	"width": 1500,
+	"height": 1000,
+	"y": 2100
+},
+	{
+	"class": "title",
+	"type": "rect",
+	"id": "2",
+	"x": 3150,
+	"width": 1500,
+	"height": 2000,
+	"y": 1100
 }
 ],
-	"filename": "test.jp2"
+	"class": "image"
 }
 ]
