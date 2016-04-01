@@ -5,14 +5,13 @@ class Polygon:
     '''A `Polygon` is a region in the plane,
        represented as a disjoint union of Boxes.
     '''
-    def __init__(self, boxes, is_disjoint=False, newspage=None):
+    def __init__(self, boxes, is_disjoint=False):
         '''If `is_disjoint==True`, then we assume the given boxes are
            disjoint, and hence don't bother to `remove_internal_overlaps`.
            Optional argument `newspage` is of type NewsPage.
         '''
         self.boxes=list(filter(None,boxes))
         if not is_disjoint: self.remove_internal_overlaps()
-        self.newspage=newspage
     def __repr__(self):
         '''String representation for debugging purposes.'''
         return 'P[%s]' % ', '.join(repr(b) for b in self.boxes)
@@ -55,7 +54,7 @@ class Polygon:
     def remove(self, other):
         '''Shrinks `self` so as not to include any points in `other`.'''
         self.boxes = self.minus(other).boxes
-    def area(self):
+    def area(self, newspage=None):
         '''Counts interior pixels, potentially weighted by pixel values.'''
         return sum(b.area(newspage) for b in self.boxes)
     def __bool__(self):

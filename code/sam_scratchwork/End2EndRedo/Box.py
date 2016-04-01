@@ -3,7 +3,7 @@
 from functools import reduce
 
 class Box:
-    def __init__(self, *args, newspage=None):
+    def __init__(self, *args):
         '''A `Box` is a axis-aligned rectangle, initialized
            either from *(miny, minx, maxy, maxx)
            or from [[miny, minx], [maxy,maxx]].
@@ -12,7 +12,6 @@ class Box:
            Optional argument `newspage` is of type NewsPage;
            if this option is specified, area becomes weighted by black pixels.
         '''
-        self.newspage=newspage
         if len(args)==4:
             miny, minx, maxy, maxx = args
             self.coors = [[miny, minx], [maxy, maxx]]
@@ -27,11 +26,11 @@ class Box:
         return str(self.coors)
     def ensure_maxcoor_exceeds_mincoor_on_both_axes(self):
         self.coors[1] = [max(self.coors[i][j] for i in range(2)) for j in range(2)]
-    def area(self):
+    def area(self, newspage):
         '''Counts interior pixels, potentially weighted by pixel values.'''
-        if self.newspage is not None:
+        if newspage is not None:
             (miny, minx), (maxy, maxx) = self.coors
-            return self.newspage.weight_on(miny, minx, maxy, maxx)
+            return newspage.weight_on(miny, minx, maxy, maxx)
         return reduce(lambda y,x:y*x, (self.coors[1][i]-self.coors[0][i] for i in range(2)))
     def join(self, other):
         '''Smallest common container.'''
@@ -84,7 +83,7 @@ class Box:
         y,x,h,w = (json[key] for key in ('y','x','height','width'))
         self.coors = [[y,x],[y+h,x+w]]
     def to_dict(self, article_id, content_class): #TODO: better name for `content_class` is `label`?
-        '''content_class is `title` or `text`'''
+        '''content_class is `title` or `article`'''
         return {
             'id': str(article_id),
             'class': content_class,

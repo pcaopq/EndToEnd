@@ -10,6 +10,9 @@ class Jaccard:
               (1) should each box,polygon,article,and segmentation store (a ptr) to its newspage?
            (0) has the advantage that we can compute area *with or without*
            respect to the ground image.
+           On the other hand,
+           (1) has the advantage that we don't have to pass a newspage everytime
+           we want to compute overlap etc.
            Does (1) have any competing advantages?
         '''
-        #TODO: resolve above?    
+        #TODO: resolve above?
