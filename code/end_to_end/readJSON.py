@@ -31,9 +31,9 @@ def rect_from_json(fname):
 def seg_from_json(fname):
 	with open(fname) as data_file:    
 	    data = json.load(data_file)
-
+	#print "data:         ", data
 	annotations = data[0]["annotations"]
-	# print annotations[0].items()
+	#print "annotationssssssssss:     ",annotations
 
 	# TODO: make sure to address the box type (article/image/title) assignment problem (i.e.
 	# at box or polygon level)

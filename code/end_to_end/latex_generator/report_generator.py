@@ -35,6 +35,27 @@ class Report_generator():
 				 """
 		return table
 
+	def generate_table_outlier(self, scores):
+
+		table = """ 
+				\\begin{table}[htbp]
+				\\centering
+				\\begin{tabular}{|c|c|c|}
+				\\hline
+				filename&algorithm&score\\\\
+				\\hline
+				"""
+		print scores
+		for counter,score in enumerate(scores):
+			#r = eval_results[name]
+			table +=  str(score[0]) + '&'  + str(score[1]) + '&' + str(score[2]) + '\\\\\n'
+
+		table += """
+				\\hline
+				\\end{tabular}
+				\\end{table}
+				 """
+		return table
 	def generate_plot(self):
 		plot =  """	
 				\\begin{figure}[!htbp]
@@ -107,13 +128,19 @@ class Report_generator():
 			outlier += fig
 		return outlier
 
-	def generate_report(self, alg_name, eval_results):
+	def generate_report(self, alg_name, eval_results, good_scores, bad_scores,filter_good,filter_bad):
 		tmpl = self.read_tmpl()
 		report_file = open(self.report_path, 'w+')
 		table = self.generate_table(alg_name, eval_results)
 		outlier = self.generate_outlier(alg_name)
+		good_outlier = self.generate_table_outlier(good_scores)
+		bad_outlier = self.generate_table_outlier(bad_scores)
 		content = tmpl.replace('TABLE', table).replace('OUTLIERS', outlier)\
 					.replace('NUMBER', str(eval_results[alg_name[0]]['num_images']))
+		content = content.replace('GOOD', good_outlier)
+		content = content.replace('GSCORE', str(filter_good))
+		content = content.replace('BAD', bad_outlier)
+		content = content.replace('BSCORE', str(filter_bad))
 		report_file.write(content)
 
 def main():

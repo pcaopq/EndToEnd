@@ -37,6 +37,10 @@ class EndToEnd:
             if not os.path.isdir(self.eval_out_path):
                 os.system('mkdir self.eval_out_path')
             self.eval_results = {}
+            self.outlier_good = []
+            self.outlier_bad = []
+            self.filter_good = 0.7
+            self.filter_bad = 0.4
 
     def segment(self):
         for fname in self.files:
@@ -47,7 +51,7 @@ class EndToEnd:
                         f = temp[0]
                         for imp_name in self.implementations:
                             if not os.path.isfile(imp_name):
-                                #print# 'invalid implementation file name'
+                                print 'invalid implementation file name ',imp_name
                                 continue
                             command = 'python %s %s %s %s %s' % ((imp_name, self.seg_out_path,) +
                                   tuple(fname+'/'+f+ext for ext in ('.jpg','.xml','.'+imp_name+'.result.json')))
@@ -57,7 +61,7 @@ class EndToEnd:
                 f = fname.split('.')[0]
                 for imp_name in self.implementations:
                     if not os.path.isfile(imp_name):
-                        #print# 'invalid implementation file name'
+                        print 'invalid implementation file name', imp_name
                         continue
                     command = 'python %s %s %s %s %s' % ((imp_name, self.seg_out_path,) +
                           tuple(f+ext for ext in ('.jpg','.xml','.'+imp_name+'.result.json')))
@@ -75,7 +79,7 @@ class EndToEnd:
                             f = temp[0]
                             for metric_name in self.metrics:
                                 if not os.path.isfile(metric_name):
-                                    #print# 'invalid implementation file name'
+                                    print 'invalid implementation file name', metric_name
                                     continue
                                 command = 'python %s %s %s %s %s %s %s %s' % ((metric_name, self.eval_out_path, self.seg_out_path,) +
                                       tuple(fname+'/'+f+ext for ext in ('.json', '.'+imp_name+'.result.json', '.jpg', '.xml'))+(imp_name,))
@@ -85,7 +89,7 @@ class EndToEnd:
                     f = fname.split('.')[0]
                     for metric_name in self.metrics:
                         if not os.path.isfile(metric_name):
-                            #print# 'invalid implementation file name'
+                            print 'invalid implementation file name',metric_name
                             continue
                         command = 'python %s %s %s %s %s %s %s %s' % ((metric_name, self.eval_out_path, self.seg_out_path,) +
                               tuple(f+ext for ext in ('.json', '.'+imp_name+'.result.json', '.jpg', '.xml'))+(imp_name,))
@@ -114,6 +118,8 @@ class EndToEnd:
             alg_result = {} # a dictionary contains precision, recall, score, history
             imp_pre, imp_rec, imp_score = 0.0, 0.0, 0.0
             eval_history = [] # precision, recall, score average for each image
+            filter_good = self.filter_good
+            filter_bad = self.filter_bad
             nfiles = len(self.files)
             for fname in self.files:
                 if os.path.isdir(fname):
@@ -124,7 +130,7 @@ class EndToEnd:
                             nfiles += 1
                             history_path = self.eval_out_path+'/'+f+'.'+imp_name+'.out'
                             if not os.path.isfile(history_path):
-                                #print# 'no evaluation history', history_path
+                                print 'no evaluation history', history_path
                                 return
 
                             img_pre, img_rec, img_score = 0.0, 0.0, 0.0
@@ -135,6 +141,10 @@ class EndToEnd:
                                     img_pre += float(numbers[0])
                                     img_rec += float(numbers[1])
                                     img_score += float(numbers[2])
+                                if (img_score / len(lines)> filter_good):
+                                    self.outlier_good.append((f,imp_name,img_score / len(lines)))
+                                if (img_score / len(lines) < filter_bad):
+                                    self.outlier_bad.append((f,imp_name,img_score / len(lines)))
                                 eval_history.append((img_pre / len(lines), img_rec / len(lines), \
                                     img_score / len(lines), f))
                 else:
@@ -152,6 +162,10 @@ class EndToEnd:
                             img_pre += float(numbers[0])
                             img_rec += float(numbers[1])
                             img_score += float(numbers[2])
+                        if (img_score / len(lines) > filter_good):
+                            self.outlier_good.append((f,imp_name,img_score / len(lines)))
+                        if (img_score / len(lines) < filter_bad):
+                            self.outlier_bad.append((f,imp_name,img_score / len(lines)))
                         eval_history.append((img_pre / len(lines), img_rec / len(lines), \
                             img_score / len(lines)))
 
@@ -258,7 +272,7 @@ class EndToEnd:
     # generate the file in latex form to plot the graphs
     def generate_report(self):
         r = Report_generator('./latex_generator/template.tex', './latex_generator/report.tex')
-        r.generate_report(self.implementations, self.eval_results)
+        r.generate_report(self.implementations, self.eval_results,self.outlier_good,self.outlier_bad,self.filter_good,self.filter_bad)
         os.system('pdflatex ./latex_generator/report.tex')
         os.system('open ./report.pdf')
 
