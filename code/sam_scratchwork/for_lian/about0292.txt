@@ -1,0 +1,5 @@
+image 0292: 616 strips
+20 bins => 77 pixels
+           only 14 titles!
+200 bins => 31 pixels
+            about 88 titles.

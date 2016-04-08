@@ -1,0 +1,420 @@
+[
+    {
+        "annotations": [
+            {
+                "x": 150.0,
+                "height": 116.0,
+                "id": "0",
+                "class": "title",
+                "type": "rect",
+                "y": 0.0,
+                "width": 72.0
+            },
+            {
+                "x": 1461.0,
+                "height": 46.85714285714283,
+                "id": "1",
+                "class": "title",
+                "type": "rect",
+                "y": 301.14285714285717,
+                "width": 1771.0
+            },
+            {
+                "x": 158.0,
+                "height": 49.0,
+                "id": "2",
+                "class": "title",
+                "type": "rect",
+                "y": 455.0,
+                "width": 525.0
+            },
+            {
+                "x": 1292.0,
+                "height": 76.0,
+                "id": "3",
+                "class": "title",
+                "type": "rect",
+                "y": 482.5,
+                "width": 1030.0
+            },
+            {
+                "x": 1288.0,
+                "height": 79.33333333333303,
+                "id": "4",
+                "class": "title",
+                "type": "rect",
+                "y": 2819.3333333333335,
+                "width": 998.0
+            },
+            {
+                "x": 1506.0,
+                "height": 49.0,
+                "id": "5",
+                "class": "title",
+                "type": "rect",
+                "y": 2912.0,
+                "width": 554.0
+            },
+            {
+                "x": 1287.0,
+                "height": 57.0,
+                "id": "7",
+                "class": "title",
+                "type": "rect",
+                "y": 4170.333333333333,
+                "width": 440.0
+            },
+            {
+                "x": 1306.0,
+                "height": 47.5,
+                "id": "7",
+                "class": "title",
+                "type": "rect",
+                "y": 4253.5,
+                "width": 395.0
+            },
+            {
+                "x": 2369.0,
+                "height": 54.33333333333337,
+                "id": "8",
+                "class": "title",
+                "type": "rect",
+                "y": 603.6666666666666,
+                "width": 540.0
+            },
+            {
+                "x": 3230.0,
+                "height": 83.0,
+                "id": "9",
+                "class": "title",
+                "type": "rect",
+                "y": 2216.6666666666665,
+                "width": 1124.0
+            },
+            {
+                "x": 2972.0,
+                "height": 72.33333333333303,
+                "id": "10",
+                "class": "title",
+                "type": "rect",
+                "y": 2924.3333333333335,
+                "width": 1538.0
+            },
+            {
+                "x": 2897.0,
+                "height": 57.5,
+                "id": "11",
+                "class": "title",
+                "type": "rect",
+                "y": 6950.5,
+                "width": 317.0
+            },
+            {
+                "x": 2928.0,
+                "height": 144.0,
+                "id": "12",
+                "class": "title",
+                "type": "rect",
+                "y": 3820.0,
+                "width": 252.0
+            },
+            {
+                "x": 4212.0,
+                "height": 48.75,
+                "id": "13",
+                "class": "title",
+                "type": "rect",
+                "y": 5650.5,
+                "width": 363.0
+            },
+            {
+                "x": 707.0,
+                "height": 25.333333333333314,
+                "id": "14",
+                "class": "title",
+                "type": "rect",
+                "y": 424.5,
+                "width": 531.0
+            },
+            {
+                "x": 1140.0,
+                "height": 21.0,
+                "id": "15",
+                "class": "title",
+                "type": "rect",
+                "y": 4903.5,
+                "width": 85.0
+            },
+            {
+                "x": 1807.0,
+                "height": 18.0,
+                "id": "16",
+                "class": "title",
+                "type": "rect",
+                "y": 1398.5,
+                "width": 108.0
+            },
+            {
+                "x": 2220.0,
+                "height": 15.25,
+                "id": "17",
+                "class": "title",
+                "type": "rect",
+                "y": 5289.75,
+                "width": 112.0
+            },
+            {
+                "x": 2951.0,
+                "height": 24.333333333333485,
+                "id": "18",
+                "class": "title",
+                "type": "rect",
+                "y": 3133.6666666666665,
+                "width": 514.0
+            },
+            {
+                "x": 2910.0,
+                "height": 25.5,
+                "id": "19",
+                "class": "title",
+                "type": "rect",
+                "y": 4393.0,
+                "width": 97.0
+            },
+            {
+                "x": 3464.0,
+                "height": 3.6666666666660603,
+                "id": "20",
+                "class": "title",
+                "type": "rect",
+                "y": 5593.666666666667,
+                "width": 59.0
+            },
+            {
+                "x": 4039.0,
+                "height": 19.0,
+                "id": "21",
+                "class": "title",
+                "type": "rect",
+                "y": 3131.5714285714284,
+                "width": 554.0
+            },
+            {
+                "x": 2438.0,
+                "height": 60.049999999999955,
+                "id": "9",
+                "class": "title",
+                "type": "rect",
+                "y": 431.1,
+                "width": 1865.0
+            },
+            {
+                "x": 1287.0,
+                "height": 23.25,
+                "id": "23",
+                "class": "title",
+                "type": "rect",
+                "y": 679.0833333333333,
+                "width": 1048.0
+            },
+            {
+                "x": 115.0,
+                "height": 6541.111111111111,
+                "id": "2",
+                "class": "article",
+                "type": "rect",
+                "y": 424.0,
+                "width": 1110.0
+            },
+            {
+                "x": 479.0,
+                "height": 24.899999999999636,
+                "id": "2",
+                "class": "article",
+                "type": "rect",
+                "y": 3050.8,
+                "width": 739.0
+            },
+            {
+                "x": 1634.0,
+                "height": 28.66666666666663,
+                "id": "3",
+                "class": "article",
+                "type": "rect",
+                "y": 586.0,
+                "width": 336.0
+            },
+            {
+                "x": 1228.0,
+                "height": 91.0,
+                "id": "4",
+                "class": "article",
+                "type": "rect",
+                "y": 3675.0,
+                "width": 1112.0
+            },
+            {
+                "x": 1239.0,
+                "height": 1036.4,
+                "id": "5",
+                "class": "article",
+                "type": "rect",
+                "y": 3025.6,
+                "width": 1101.0
+            },
+            {
+                "x": 1779.0,
+                "height": 3955.2,
+                "id": "5",
+                "class": "article",
+                "type": "rect",
+                "y": 3037.8,
+                "width": 570.0
+            },
+            {
+                "x": 1221.0,
+                "height": 2630.2857142857147,
+                "id": "7",
+                "class": "article",
+                "type": "rect",
+                "y": 4356.0,
+                "width": 562.0
+            },
+            {
+                "x": 2240.0,
+                "height": 6252.392857142857,
+                "id": "8",
+                "class": "article",
+                "type": "rect",
+                "y": 750.75,
+                "width": 672.0
+            },
+            {
+                "x": 2659.0,
+                "height": 5174.0,
+                "id": "8",
+                "class": "article",
+                "type": "rect",
+                "y": 1486.5,
+                "width": 248.0
+            },
+            {
+                "x": 3486.0,
+                "height": 21.33333333333303,
+                "id": "9",
+                "class": "article",
+                "type": "rect",
+                "y": 2790.8333333333335,
+                "width": 535.0
+            },
+            {
+                "x": 3303.0,
+                "height": 2667.25,
+                "id": "10",
+                "class": "article",
+                "type": "rect",
+                "y": 3016.0,
+                "width": 1221.0
+            },
+            {
+                "x": 2909.0,
+                "height": 23.57142857142844,
+                "id": "11",
+                "class": "article",
+                "type": "rect",
+                "y": 6989.857142857143,
+                "width": 529.0
+            },
+            {
+                "x": 2353.0,
+                "height": 2927.233333333333,
+                "id": "12",
+                "class": "article",
+                "type": "rect",
+                "y": 4012.6,
+                "width": 1123.0
+            },
+            {
+                "x": 3758.0,
+                "height": 38.33333333333394,
+                "id": "13",
+                "class": "article",
+                "type": "rect",
+                "y": 6886.333333333333,
+                "width": 684.0
+            },
+            {
+                "x": 661.0,
+                "height": 6499.214285714285,
+                "id": "14",
+                "class": "article",
+                "type": "rect",
+                "y": 466.2857142857143,
+                "width": 577.0
+            },
+            {
+                "x": 1792.0,
+                "height": 709.1666666666667,
+                "id": "16",
+                "class": "article",
+                "type": "rect",
+                "y": 1946.3333333333333,
+                "width": 455.0
+            },
+            {
+                "x": 1917.0,
+                "height": 1231.0,
+                "id": "17",
+                "class": "article",
+                "type": "rect",
+                "y": 5330.333333333333,
+                "width": 428.0
+            },
+            {
+                "x": 2930.0,
+                "height": 820.8333333333335,
+                "id": "18",
+                "class": "article",
+                "type": "rect",
+                "y": 3173.5,
+                "width": 1094.0
+            },
+            {
+                "x": 2921.0,
+                "height": 20.25,
+                "id": "19",
+                "class": "article",
+                "type": "rect",
+                "y": 5644.25,
+                "width": 240.0
+            },
+            {
+                "x": 3489.0,
+                "height": 3870.125,
+                "id": "21",
+                "class": "article",
+                "type": "rect",
+                "y": 3169.5,
+                "width": 1103.0
+            },
+            {
+                "x": 1233.0,
+                "height": 1956.1428571428573,
+                "id": "23",
+                "class": "article",
+                "type": "rect",
+                "y": 721.0,
+                "width": 561.0
+            },
+            {
+                "x": 1792.0,
+                "height": 1980.6,
+                "id": "23",
+                "class": "article",
+                "type": "rect",
+                "y": 713.4,
+                "width": 552.0
+            }
+        ]
+    }
+]
