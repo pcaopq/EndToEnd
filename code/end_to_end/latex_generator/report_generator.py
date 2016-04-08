@@ -15,7 +15,7 @@ class Report_generator():
 
 	def generate_table(self, alg_name, eval_results):
 
-		table = """ 
+		table = """
 				\\begin{table}[htbp]
 				\\centering
 				\\begin{tabular}{|c|c|c|c|}
@@ -37,7 +37,7 @@ class Report_generator():
 
 	def generate_table_outlier(self, scores):
 
-		table = """ 
+		table = """
 				\\begin{table}[htbp]
 				\\centering
 				\\begin{tabular}{|c|c|c|}
@@ -45,7 +45,7 @@ class Report_generator():
 				filename&algorithm&score\\\\
 				\\hline
 				"""
-		print scores
+		print(scores)
 		for counter,score in enumerate(scores):
 			#r = eval_results[name]
 			table +=  str(score[0]) + '&'  + str(score[1]) + '&' + str(score[2]) + '\\\\\n'
@@ -57,14 +57,14 @@ class Report_generator():
 				 """
 		return table
 	def generate_plot(self):
-		plot =  """	
+		plot =  """
 				\\begin{figure}[!htbp]
 				\centering
-				\includegraphics[width = 8cm]{performance.png} 
+				\includegraphics[width = 8cm]{performance.png}
 				\end{figure}
 				\\\\
 				"""
-		
+
 		return plot
 
 	def generate_outlier(self, alg_name):
@@ -74,7 +74,7 @@ class Report_generator():
 			b_gt_name = alg+'.gt.best.png'
 			w_name = alg+'.worst.png'
 			w_gt_name = alg+'.gt.worst.png'
-			fig =   """	
+			fig =   """
 					\\begin{figure}
 					\centering
 					\\begin{subfigure}{.5\\textwidth}
@@ -98,9 +98,9 @@ class Report_generator():
 					"""
 					\label{fig:test}
 					\end{figure}
-					"""		
+					"""
 			outlier += fig
-			fig =   """	
+			fig =   """
 					\\begin{figure}
 					\centering
 					\\begin{subfigure}{.5\\textwidth}
@@ -124,7 +124,7 @@ class Report_generator():
 					"""
 					\label{fig:test}
 					\end{figure}
-					"""		
+					"""
 			outlier += fig
 		return outlier
 

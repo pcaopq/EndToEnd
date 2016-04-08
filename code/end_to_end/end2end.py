@@ -51,7 +51,7 @@ class EndToEnd:
                         f = temp[0]
                         for imp_name in self.implementations:
                             if not os.path.isfile(imp_name):
-                                print 'invalid implementation file name ',imp_name
+                                print('invalid implementation file name ',imp_name)
                                 continue
                             command = 'python %s %s %s %s %s' % ((imp_name, self.seg_out_path,) +
                                   tuple(fname+'/'+f+ext for ext in ('.jpg','.xml','.'+imp_name+'.result.json')))
@@ -61,7 +61,7 @@ class EndToEnd:
                 f = fname.split('.')[0]
                 for imp_name in self.implementations:
                     if not os.path.isfile(imp_name):
-                        print 'invalid implementation file name', imp_name
+                        print('invalid implementation file name', imp_name)
                         continue
                     command = 'python %s %s %s %s %s' % ((imp_name, self.seg_out_path,) +
                           tuple(f+ext for ext in ('.jpg','.xml','.'+imp_name+'.result.json')))
@@ -79,7 +79,7 @@ class EndToEnd:
                             f = temp[0]
                             for metric_name in self.metrics:
                                 if not os.path.isfile(metric_name):
-                                    print 'invalid implementation file name', metric_name
+                                    print('invalid implementation file name', metric_name)
                                     continue
                                 command = 'python %s %s %s %s %s %s %s %s' % ((metric_name, self.eval_out_path, self.seg_out_path,) +
                                       tuple(fname+'/'+f+ext for ext in ('.json', '.'+imp_name+'.result.json', '.jpg', '.xml'))+(imp_name,))
@@ -89,7 +89,7 @@ class EndToEnd:
                     f = fname.split('.')[0]
                     for metric_name in self.metrics:
                         if not os.path.isfile(metric_name):
-                            print 'invalid implementation file name',metric_name
+                            print('invalid implementation file name',metric_name)
                             continue
                         command = 'python %s %s %s %s %s %s %s %s' % ((metric_name, self.eval_out_path, self.seg_out_path,) +
                               tuple(f+ext for ext in ('.json', '.'+imp_name+'.result.json', '.jpg', '.xml'))+(imp_name,))
@@ -130,7 +130,7 @@ class EndToEnd:
                             nfiles += 1
                             history_path = self.eval_out_path+'/'+f+'.'+imp_name+'.out'
                             if not os.path.isfile(history_path):
-                                print 'no evaluation history', history_path
+                                print('no evaluation history', history_path)
                                 return
 
                             img_pre, img_rec, img_score = 0.0, 0.0, 0.0
@@ -250,7 +250,7 @@ class EndToEnd:
             self.generate_segment_plot(worst_img_path, worst_gt_path, worst_gt_fig_path)
             self.generate_segment_plot(best_img_path, best_out_path, best_out_fig_path)
             self.generate_segment_plot(best_img_path, best_gt_path, best_gt_fig_path)
-    
+
     def generate_segment_plot(self, img_path, f_path, out_path):
         colors = ['r', 'g', 'b', 'y', 'c', 'm', '#4488ee', '#66ccff']
         count = 0
@@ -260,7 +260,7 @@ class EndToEnd:
         img = mpimg.imread(img_path)
         plt.imshow(img, cmap='Greys_r')
         for r in rect:
-            if not r['id'] in color_map:     
+            if not r['id'] in color_map:
                 color_map[r['id']] = colors[count % len(colors)]
                 count += 1
             currentAxis.add_patch(Rectangle((r['x'], r['y']), r['width'], r['height'], facecolor=color_map[r['id']], alpha=0.5))
