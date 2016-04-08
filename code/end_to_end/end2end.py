@@ -1,6 +1,9 @@
 import os, sys
 import Image
 import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+from matplotlib.patches import Rectangle
+from readJSON import *
 
 sys.path.insert(0, './latex_generator')
 from report_generator import *
@@ -99,6 +102,7 @@ class EndToEnd:
                     precision:
                     recall:
                     score:
+                    num_images:
                     history:
                     {
                         (precision1, recall1, score1),
@@ -132,7 +136,7 @@ class EndToEnd:
                                     img_rec += float(numbers[1])
                                     img_score += float(numbers[2])
                                 eval_history.append((img_pre / len(lines), img_rec / len(lines), \
-                                    img_score / len(lines)))
+                                    img_score / len(lines), f))
                 else:
                     f = fname.split('/')[-1]
                     history_path = self.eval_out_path+'/'+f+'.'+imp_name+'.out'
@@ -163,14 +167,14 @@ class EndToEnd:
 
             eval_history = sorted(eval_history, key=lambda tup: tup[2])
 
+            alg_result['num_images'] = nfiles
             alg_result['precision'] = imp_pre
             alg_result['recall'] = imp_rec
-            alg_result['score'] = imp_score
+            alg_result['fscore'] = imp_score
             alg_result['history'] = eval_history
             self.eval_results[imp_name] = alg_result
-        #print# self.eval_results
 
-    def plot_performance_curve(self):
+    def generate_performance_curve(self):
 
         line_colors = ['r', 'g', 'b']
         plt.hold(True)
@@ -195,12 +199,61 @@ class EndToEnd:
 
             plt.plot(x,y)
             plt.xlabel('percentage of data')
-            plt.ylabel('accuracy')
+            plt.ylabel('F score')
             plt.line = plt.plot(x, y, line_colors[i % len(line_colors)], label=imp_name)
             plt.legend(loc='upper left')
         plt.hold(False)
+        plt.gca().invert_xaxis()
         plt.savefig('./performance.png')
+        plt.close()
 
+    def generate_outlier(self):
+        for imp_name, result in self.eval_results.items():
+            worst_name = ''
+            best_name = ''
+            worst_val, best_val = 20, 0
+            for record in result['history']:
+                # record is (precision, recall, fscore, filename)
+                if record[2] > best_val:
+                    best_val = record[2]
+                    best_name = record[3]
+                if record[2] < worst_val:
+                    worst_val = record[2]
+                    worst_name = record[3]
+
+            worst_out_path = self.seg_out_path+'/'+worst_name.split('.')[0]+'.'+imp_name+'.result.json'
+            worst_gt_path = self.files[0]+'/'+worst_name.split('.')[0]+'.json'
+            worst_img_path = self.files[0]+'/'+worst_name.split('.')[0]+'.jpg'
+            best_out_path = self.seg_out_path+'/'+best_name.split('.')[0]+'.'+imp_name+'.result.json'
+            best_gt_path = self.files[0]+'/'+best_name.split('.')[0]+'.json'
+            best_img_path = self.files[0]+'/'+best_name.split('.')[0]+'.jpg'
+
+            worst_out_fig_path = './'+imp_name+'.worst.png'
+            worst_gt_fig_path = './'+imp_name+'.gt.worst.png'
+            best_out_fig_path = './'+imp_name+'.best.png'
+            best_gt_fig_path = './'+imp_name+'.gt.best.png'
+            self.generate_segment_plot(worst_img_path, worst_out_path, worst_out_fig_path)
+            self.generate_segment_plot(worst_img_path, worst_gt_path, worst_gt_fig_path)
+            self.generate_segment_plot(best_img_path, best_out_path, best_out_fig_path)
+            self.generate_segment_plot(best_img_path, best_gt_path, best_gt_fig_path)
+    
+    def generate_segment_plot(self, img_path, f_path, out_path):
+        colors = ['r', 'g', 'b', 'y', 'c', 'm', '#4488ee', '#66ccff']
+        count = 0
+        color_map = {}
+        rect = rect_from_json(f_path)
+        currentAxis = plt.gca()
+        img = mpimg.imread(img_path)
+        plt.imshow(img, cmap='Greys_r')
+        for r in rect:
+            if not r['id'] in color_map:     
+                color_map[r['id']] = colors[count % len(colors)]
+                count += 1
+            currentAxis.add_patch(Rectangle((r['x'], r['y']), r['width'], r['height'], facecolor=color_map[r['id']], alpha=0.5))
+        plt.axis([0, len(img[0]), 0, len(img)])
+        plt.gca().invert_yaxis()
+        plt.xlabel(f_path.split('.')[0])
+        plt.savefig(out_path)
 
     # generate the file in latex form to plot the graphs
     def generate_report(self):
@@ -215,12 +268,12 @@ def main():
    end_to_end.segment()
    end_to_end.evaluate()
    end_to_end.collect_data()
-   end_to_end.plot_performance_curve()
+   end_to_end.generate_performance_curve()
+   end_to_end.generate_outlier()
    end_to_end.generate_report()
 
 if __name__ == '__main__':
    main()
-
 
 
 '''

@@ -41,7 +41,7 @@ if __name__ == "__main__":
 	tbList = [(hpos*ws,vpos*hs,width*ws,height*hs) for (hpos,vpos,width,height) in tbList]
 
 	# prepare to write to json by putting  data into dicts
-	seg = {"annotations":[]}
+	seg = [{"annotations":[]}]
 	id = 0
 	for (hpos,vpos,width,height) in tbList:
 		tbInfo = {}
@@ -52,7 +52,7 @@ if __name__ == "__main__":
 		tbInfo["y"] = vpos
 		tbInfo["type"] = "rect"
 		tbInfo["id"] = id
-		seg["annotations"].append(tbInfo)
+		seg[0]["annotations"].append(tbInfo)
 		id += 1
 
 	# write to json

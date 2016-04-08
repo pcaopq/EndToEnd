@@ -23,15 +23,16 @@ from Box import Box
 from Polygon import Polygon
 from Segmentation import Segmentation
 
-def seg_from_json(fname, gt_flag):
+def rect_from_json(fname):
+	with open(fname) as data_file:    
+	    data = json.load(data_file)
+	return data[0]["annotations"]
+
+def seg_from_json(fname):
 	with open(fname) as data_file:    
 	    data = json.load(data_file)
 
-	annotations = {}
-	if gt_flag:
-		annotations = data[0]["annotations"]
-	else:
-		annotations = data["annotations"]
+	annotations = data[0]["annotations"]
 	# print annotations[0].items()
 
 	# TODO: make sure to address the box type (article/image/title) assignment problem (i.e.
