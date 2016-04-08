@@ -94,7 +94,7 @@ def adjoins(a,b):
 def sitson_(a,b):
     centerxx = lambda ab: (1*ab[0][1]+1*ab[1][1])/2.0
     xx = lambda ab: lambda xx: ab[0][1]<xx<ab[1][1]
-    return a[1][0]>=b[0][0] and (xx(a)(centerxx(b)) and xx(b)(centerxx(a)))
+    return a[1][0]>=b[0][0] and (xx(a)(centerxx(b)) or xx(b)(centerxx(a)))
 def getstrips(contents,coordinates,heights):
    TH = findtitleheight(heights)
    print('titleheights=',TH)
