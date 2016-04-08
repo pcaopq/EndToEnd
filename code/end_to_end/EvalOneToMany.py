@@ -31,8 +31,8 @@ class EvalOneToMany:
 
 		self.history_path = self.img_path.split('/')[-1] + '.' + imp_name + '.out'
 
-		self.ground_truth = seg_from_json(gt_path, True)
-		self.seg_to_eval = seg_from_json(seg_folder+'/'+seg_path.split('/')[-1], False)
+		self.ground_truth = seg_from_json(gt_path)
+		self.seg_to_eval = seg_from_json(seg_folder+'/'+seg_path.split('/')[-1])
 
 	def evaluate(self):
 		# user can provide either the segmentation blocks or the segmentation file path
