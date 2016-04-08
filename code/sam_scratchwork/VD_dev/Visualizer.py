@@ -73,7 +73,7 @@ class Visualizer:
         (y,x),(Y,X) = box.coors; hs,ws = self.scale_h, self.scale_w
         st,ast = ('@.\\title.xbm','@.\\clear.xbm') if content_class=='title' else ('@.\\article.xbm','@.\\clear.xbm')
         self.canvas.create_rectangle(x*ws+1,y*hs+1,X*ws+1,Y*hs+1, tag='boxes',
-                                     outline=color, fill=color, stipple=st, activestipple=ast, activewidth=activewidth)
+                                     outline=color, fill=color, width=2, stipple=st, activestipple=ast, activewidth=activewidth)
     def display(self):
         self.refresh_canvas()
         h,w = size_of_image(self.image_name_entry.get())

@@ -1,0 +1,35 @@
+[
+    {
+        "annotations": [
+            {
+                "class": "article",
+                "id": "0",
+                "y": 0,
+                "x": 0,
+                "height": 200,
+                "width": 200,
+                "type": "rect"
+            },
+            {
+                "class": "article",
+                "id": "1",
+                "y": 200,
+                "x": 0,
+                "height": 100,
+                "width": 100,
+                "type": "rect"
+            },
+            {
+                "class": "article",
+                "id": "2",
+                "y": 400,
+                "x": 0,
+                "height": 50,
+                "width": 50,
+                "type": "rect"
+            },
+        ],
+        "class": "image",
+        "filename": "blank_small.jpg"
+    }
+]

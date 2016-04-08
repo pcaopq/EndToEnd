@@ -72,7 +72,7 @@ class EvalOneToMany:
 		# computing score table
 		for j, g in enumerate(self.ground_truth.segs):
 			for k, s in enumerate(self.seg_to_eval.segs):
-				score[j][k] = s.jaccard_similarity(g) 
+				score[j][k] = s.jaccard_similarity(g)
 
 		for c in range(NUM_CLASS):
 			# computing one2one
@@ -119,7 +119,7 @@ class EvalOneToMany:
 				rec[c] = 0
 			else:
 				rec[c] = one2one[c] / M[c] + d_one2many[c] / (4 * M[c]) + d_many2one[c] / (4 * M[c])
-		
+
 		# compute final score
 		num_class = 0
 		for c in range(NUM_CLASS):

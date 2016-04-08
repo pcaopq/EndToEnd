@@ -1,0 +1,96 @@
+[
+    {
+        "annotations": [
+            {
+                "class": "article", 
+                "width": 503, 
+                "y": 2427, 
+                "x": 2139, 
+                "height": 63, 
+                "type": "rect", 
+                "id": "2180273782"
+            }, 
+            {
+                "class": "article", 
+                "width": 484, 
+                "y": 2499, 
+                "x": 2148, 
+                "height": 37, 
+                "type": "rect", 
+                "id": "2180273782"
+            }, 
+            {
+                "class": "article", 
+                "width": 631, 
+                "y": 2540, 
+                "x": 2058, 
+                "height": 265, 
+                "type": "rect", 
+                "id": "2180273782"
+            }, 
+            {
+                "class": "article", 
+                "width": 634, 
+                "y": 2805, 
+                "x": 2055, 
+                "height": 2618, 
+                "type": "rect", 
+                "id": "2180273782"
+            }, 
+            {
+                "class": "article", 
+                "width": 677, 
+                "y": 659, 
+                "x": 2689, 
+                "height": 4773, 
+                "type": "rect", 
+                "id": "2180273782"
+            }, 
+            {
+                "class": "article", 
+                "width": 3266, 
+                "y": 69, 
+                "x": 91, 
+                "height": 587, 
+                "type": "rect", 
+                "id": "2180273762"
+            }, 
+            {
+                "class": "article", 
+                "width": 687, 
+                "y": 665, 
+                "x": 100, 
+                "height": 1181, 
+                "type": "rect", 
+                "id": "2180273762"
+            }, 
+            {
+                "class": "article", 
+                "width": 687, 
+                "y": 1849, 
+                "x": 87, 
+                "height": 3589, 
+                "type": "rect", 
+                "id": "2180273772"
+            }, 
+            {
+                "class": "article", 
+                "width": 1265, 
+                "y": 678, 
+                "x": 790, 
+                "height": 4760, 
+                "type": "rect", 
+                "id": "2180273772"
+            }, 
+            {
+                "class": "article", 
+                "width": 634, 
+                "y": 672, 
+                "x": 2058, 
+                "height": 1752, 
+                "type": "rect", 
+                "id": "2180273772"
+            }
+        ]
+    }
+]

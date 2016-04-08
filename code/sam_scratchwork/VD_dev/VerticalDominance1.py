@@ -151,7 +151,6 @@ def group_textblocks(N,assignments):
    articleblocks=[[] for j in range(N)]
    for j,words in assignments.items(): #for each group of title/associated textstrips:
       if not words: continue #(don't bother if there are _no_ associated textstrips)
-
       #In what follows, our pattern will be to keep merging textstrips vertically,
       #into columns; in each loop, we find such a column, then remove from `words`
       #the members of that column, so that `words` is empty exactly when we've
