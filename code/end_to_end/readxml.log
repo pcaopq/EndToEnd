@@ -1,0 +1,36 @@
+Filename: /Users/Bruce/Documents/mdp-newspaper-segmentation/code/end_to_end/ReadTextLines.py
+
+Line #    Mem usage    Increment   Line Contents
+================================================
+    20     37.8 MiB      0.0 MiB   @profile(stream = fp)
+    21                             def readxml(xmlname, imagename, scrapedname):
+    22    133.4 MiB     95.7 MiB       xmldoc = minidom.parse(xmlname)
+    23    133.5 MiB      0.0 MiB       alto = xmldoc.getElementsByTagName('alto')[0]
+    24    133.5 MiB      0.0 MiB       layout = alto.getElementsByTagName('Layout')[0]
+    25    133.5 MiB      0.0 MiB       page = layout.getElementsByTagName('Page')[0]
+    26    133.5 MiB      0.0 MiB       printspace = page.getElementsByTagName('PrintSpace')[0]
+    27    133.5 MiB      0.0 MiB       textblocks = printspace.getElementsByTagName('TextBlock')
+    28                             
+    29    229.1 MiB     95.7 MiB       factor = get_scalefactors(xmlname, imagename)
+    30                             
+    31    229.1 MiB      0.0 MiB       with open(scrapedname, 'w') as f:
+    32    229.1 MiB      0.0 MiB       	for textblock in textblocks:
+    33    229.1 MiB      0.0 MiB               f.write('-'*70+'\n')
+    34    229.1 MiB      0.0 MiB               if textblock.getElementsByTagName('TextLine'):
+    35    229.1 MiB      0.0 MiB                   textlines = textblock.getElementsByTagName('TextLine')
+    36    229.1 MiB      0.0 MiB                   for textline in textlines:
+    37    229.1 MiB      0.0 MiB                       strings = textline.getElementsByTagName('String')
+    38    229.1 MiB      0.0 MiB                       sps = textline.getElementsByTagName('SP')
+    39    229.1 MiB      0.0 MiB                       for string in strings:
+    40    229.1 MiB      0.0 MiB                           L = lambda label:float(string.getAttribute(label))
+    41    229.1 MiB      0.0 MiB                           S = lambda label:(string.getAttribute(label))
+    42    229.1 MiB      0.0 MiB                           coor = (L('VPOS'), L('HPOS'), L('HEIGHT'),L('WIDTH'))
+    43    229.1 MiB      0.0 MiB                           coor = scale(coor, factor)
+    44    229.1 MiB      0.0 MiB                           f.write("%s %f %f %f %f\n" % ((S('CONTENT'),)+coor))
+    45    229.1 MiB      0.0 MiB                       for sp in sps:
+    46    229.1 MiB      0.0 MiB                           L = lambda label:float(string.getAttribute(label))
+    47    229.1 MiB      0.0 MiB                           f.write("%s %s %s\n" % (L('VPOS')*factor[0],
+    48    229.1 MiB      0.0 MiB                                                   L('HPOS')*factor[1],
+    49    229.1 MiB      0.0 MiB                                                   L('WIDTH')*factor[1]))
+
+

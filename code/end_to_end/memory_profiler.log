@@ -1,0 +1,32 @@
+Filename: end2end.py
+
+Line #    Mem usage    Increment   Line Contents
+================================================
+    48     37.4 MiB      0.0 MiB       @profile(stream = fp)        
+    49                                 def segment(self):
+    50     37.4 MiB      0.0 MiB           for fname in self.files:
+    51     37.4 MiB     -0.0 MiB               if os.path.isdir(fname):
+    52     37.4 MiB      0.0 MiB                   for f in os.listdir(fname):
+    53     37.4 MiB      0.0 MiB                       temp = f.split('.')
+    54     37.4 MiB      0.0 MiB                       if temp[-1] == 'jpg':
+    55     37.4 MiB      0.0 MiB                           f = temp[0]
+    56     37.4 MiB      0.0 MiB                           for imp_name in self.implementations:
+    57     37.4 MiB      0.0 MiB                               if not os.path.isfile(imp_name):
+    58                                                             print('invalid implementation file name ',imp_name)
+    59                                                             continue
+    60     37.4 MiB      0.0 MiB                               command = 'python %s %s %s %s %s' % ((imp_name, self.seg_out_path,) +
+    61     37.4 MiB      0.0 MiB                                     tuple(fname+'/'+f+ext for ext in ('.jpg','.xml','.'+imp_name+'.result.json')))
+    62                                                         #print# command
+    63     37.4 MiB      0.0 MiB                               os.system(command)
+    64                                         else:
+    65                                             f = fname.split('.')[0]
+    66                                             for imp_name in self.implementations:
+    67                                                 if not os.path.isfile(imp_name):
+    68                                                     print('invalid implementation file name', imp_name)
+    69                                                     continue
+    70                                                 command = 'python %s %s %s %s %s' % ((imp_name, self.seg_out_path,) +
+    71                                                       tuple(f+ext for ext in ('.jpg','.xml','.'+imp_name+'.result.json')))
+    72                                                 #print# command
+    73                                                 os.system(command)
+
+

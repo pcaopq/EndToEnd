@@ -1,0 +1,12 @@
+Filename: processXML.py
+
+Line #    Mem usage    Increment   Line Contents
+================================================
+   126      9.3 MiB      0.0 MiB   @profile(stream = fp)   
+   127                             def main():
+   128      9.3 MiB      0.0 MiB   	start = timeit.default_timer()
+   129      9.3 MiB      0.0 MiB   	xml = ProcessXML("0003.xml")
+   130    147.0 MiB    137.7 MiB   	print(xml.getTBData())
+   131    147.0 MiB      0.0 MiB   	print timeit.default_timer() - start
+
+

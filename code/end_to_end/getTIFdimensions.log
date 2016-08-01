@@ -1,0 +1,18 @@
+Filename: /Users/Bruce/Documents/mdp-newspaper-segmentation/code/end_to_end/processXML.py
+
+Line #    Mem usage    Increment   Line Contents
+================================================
+    28    133.4 MiB      0.0 MiB   	@profile(stream = fp)
+    29                             	def getTIFdimensions(self):
+    30                             		''' returns (height, width) of the .tif data in the xml file. we will use this
+    31                             		data to change scales to the .jp2 image size
+    32                             		'''
+    33    228.8 MiB     95.4 MiB   		xmldoc = minidom.parse(self.filename)
+    34    228.8 MiB      0.0 MiB   		alto = xmldoc.getElementsByTagName('alto')[0]
+    35    228.8 MiB      0.0 MiB   		layout = alto.getElementsByTagName('Layout')[0]
+    36    228.8 MiB      0.0 MiB   		page = layout.getElementsByTagName('Page')[0]
+    37    228.8 MiB      0.0 MiB   		h = page.getAttribute('HEIGHT')
+    38    228.8 MiB      0.0 MiB   		w = page.getAttribute('WIDTH')
+    39    228.8 MiB      0.0 MiB   		return (h,w)
+
+

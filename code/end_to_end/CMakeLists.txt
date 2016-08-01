@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 2.8)
+project( imageseg )
+find_package( OpenCV )
+include_directories( ${OpenCV_INCLUDE_DIRS} )
+add_executable( imageseg imageseg.cpp )
+target_link_libraries( imageseg ${OpenCV_LIBS} )
+set_property(TARGET imageseg PROPERTY CXX_STANDARD 11)

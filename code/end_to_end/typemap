@@ -1,0 +1,14 @@
+
+// This tells SWIG to treat an double * argument with name 'OutValue' as
+// an output value.  We'll append the value to the current result which 
+// is guaranteed to be a List object by SWIG.
+
+//%typemap(out) long *value {
+//    $result = PyLong_FromLong(*$1);
+//}
+
+//%typemap(in,numinputs=0) long *value(long temp) {
+//    $1 = &temp;
+//}
+//int spam(double a, double b, double *OutValue, double *OutValue);
+//XMLError QueryIntAttribute( const char* name, long* value ) const;

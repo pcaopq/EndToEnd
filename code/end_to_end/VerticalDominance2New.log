@@ -1,0 +1,70 @@
+Filename: VerticalDominance2New.py
+
+Line #    Mem usage    Increment   Line Contents
+================================================
+    18     38.2 MiB      0.0 MiB   @profile(stream=fp)
+    19                             def main():
+    20     38.2 MiB      0.0 MiB     outfolder, imagename, xmlname,outname = sys.argv[1:5]
+    21     38.2 MiB      0.0 MiB     outname = outfolder + '/' + outname.split('/')[-1]
+    22     38.2 MiB      0.0 MiB     scrapedname = xmlname+'.scraped.txt'
+    23     38.2 MiB      0.0 MiB     titlesname = xmlname+'.titles.txt'
+    24     38.2 MiB      0.0 MiB     textsname = xmlname+'.texts.txt'
+    25                               '''
+    26                               *** Step 0: Fetch Strips from XML ***'''
+    27     38.3 MiB      0.0 MiB     start = timeit.default_timer()
+    28     46.9 MiB      8.7 MiB     ReadTextLines0.readxml(xmlname,imagename, scrapedname)
+    29     46.9 MiB      0.0 MiB     vdclass = VD2.VerticalDominance()
+    30     47.1 MiB      0.2 MiB     vdclass.parse(scrapedname)  #contents,coordinates,heights = 
+    31     47.2 MiB      0.1 MiB     vdclass.getstrips() #titlestrips,textstrips = 
+    32                               # titlestrips,textstrips = getstrips(contents,coordinates,heights)
+    33     47.2 MiB      0.0 MiB     DONT_MERGE_JUST_SHOW=False
+    34     47.2 MiB      0.0 MiB     if DONT_MERGE_JUST_SHOW:
+    35                                   titleblocks, articleblocks = vdclass.titlecoors, [[ts] for ts in vdclass.newtextcoors];
+    36                                   title_assignments = list(range(len(titleblocks)))
+    37                                   # print(title_assignments)
+    38                               else:
+    39                                   '''
+    40                                   *** Step 1: Classify some blocks as Titles *** '''
+    41     47.2 MiB      0.0 MiB         vdclass.gettitleblocks()
+    42                                   '''
+    43                                   *** Step 2: Compute assignments of Textblocks to Titles *** '''
+    44     47.2 MiB      0.1 MiB         vdclass.assign_textblocks()
+    45                                   '''
+    46                                   *** Step 3: Merge articleblocks based on title *** '''
+    47     47.3 MiB      0.0 MiB         vdclass.group_titleblocks()
+    48                                   # print(title_assignments)
+    49     47.3 MiB      0.0 MiB         vdclass.group_textblocks()
+    50                               '''
+    51                               *** Step 4: Write to JSON: *** '''
+    52     47.3 MiB      0.0 MiB     anns = []
+    53     47.5 MiB      0.2 MiB     for j,(y,x,h,w) in enumerate(vdclass.titlecoors):
+    54     47.5 MiB     -0.0 MiB        anns.append({"class": "title",
+    55     47.5 MiB      0.0 MiB                     "height": h-y,
+    56     47.5 MiB      0.0 MiB                     "id": str(int(vdclass.title_assignments[j])),
+    57     47.5 MiB      0.0 MiB                     "type": "rect",
+    58     47.5 MiB      0.0 MiB                     "width": w-x,
+    59     47.5 MiB      0.0 MiB                     "x": x,
+    60     47.5 MiB      0.0 MiB                     "y": y})
+    61     47.7 MiB      0.2 MiB     for j,ab in enumerate(vdclass.articleblocks):
+    62     47.7 MiB      0.0 MiB        for (y,x,h,w) in ab:
+    63     47.7 MiB      0.0 MiB           anns.append({"class": "article",
+    64     47.7 MiB      0.0 MiB                        "height": h-y,
+    65     47.7 MiB      0.0 MiB                        "id": str(j),
+    66     47.7 MiB      0.0 MiB                        "type": "rect",
+    67     47.7 MiB      0.0 MiB                        "width": w-x,
+    68     47.7 MiB      0.0 MiB                        "x": x,
+    69     47.7 MiB      0.0 MiB                        "y": y})
+    70                             
+    71     47.7 MiB      0.0 MiB     seg = [{
+    72     47.7 MiB      0.0 MiB             "annotations": anns,
+    73                                     }]
+    74                             
+    75     47.7 MiB      0.0 MiB     with open(outname,'w') as f:
+    76     47.7 MiB      0.0 MiB        json.dump(seg, f, indent=4)
+    77     47.7 MiB      0.0 MiB     f.close()
+    78     47.7 MiB      0.0 MiB     with open('../../output/segment'+'/'+'VD2newtime', 'a+') as f:
+    79     47.7 MiB      0.0 MiB       f.write("%f"%(timeit.default_timer() - start,))   
+    80     47.7 MiB      0.0 MiB       f.write(' ')
+    81     47.7 MiB      0.0 MiB     f.close()
+
+

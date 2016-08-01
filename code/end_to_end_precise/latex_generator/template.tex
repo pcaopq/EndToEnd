@@ -1,0 +1,31 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{pgfplots}
+\usepackage{amsfonts}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{grffile}
+\begin{document}
+\title{Report}
+\maketitle
+\section*{Evaluation Data}
+NUMBER
+TABLE
+\section*{Performance Curve}
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width = 15cm]{performance.png} 
+\end{figure}
+\section*{Outliers}
+\subsection*{Good outliers}
+filter: GSCORE
+GOOD
+\subsection*{Bad outliers}
+filter: BSCORE
+BAD
+\newpage
+OUTLIERS
+\end{document}

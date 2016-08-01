@@ -1,0 +1,12 @@
+Filename: /Users/Bruce/Documents/mdp-newspaper-segmentation/code/end_to_end/ReadTextLines.py
+
+Line #    Mem usage    Increment   Line Contents
+================================================
+    10    133.4 MiB      0.0 MiB   @profile(stream = fp)
+    11                             def get_scalefactors(xmlname, imagename):
+    12    133.4 MiB      0.0 MiB       pxml = processXML.ProcessXML(xmlname)
+    13    228.9 MiB     95.4 MiB       (h,w) = pxml.getTIFdimensions(); h,w=float(h),float(w)
+    14    229.0 MiB      0.2 MiB       (hj,wj) = size_of_image(imagename)
+    15    229.0 MiB      0.0 MiB       return float(hj)/h, float(wj)/w
+
+

@@ -1,0 +1,63 @@
+Filename: VerticalDominanceNew.py
+
+Line #    Mem usage    Increment   Line Contents
+================================================
+    19     10.4 MiB      0.0 MiB   @profile(stream = fp)
+    20                             def main():
+    21     10.4 MiB      0.0 MiB     outfolder, imagename, xmlname,outname = sys.argv[1:5]
+    22     10.4 MiB      0.0 MiB     outname = outname.split('/')[-1]
+    23     10.4 MiB      0.0 MiB     outname = outfolder + '/' + outname.split('/')[-1]
+    24     10.4 MiB      0.0 MiB     scrapedname = xmlname+'.scraped.txt'
+    25     10.4 MiB      0.0 MiB     titlesname = xmlname+'.titles.txt'
+    26     10.4 MiB      0.0 MiB     textsname = xmlname+'.texts.txt'
+    27                               '''
+    28                               *** Step 0: Fetch Strips from XML ***'''
+    29     10.4 MiB      0.0 MiB     start = timeit.default_timer()
+    30     19.1 MiB      8.8 MiB     ReadTextLines0.readxml(xmlname,imagename, scrapedname)
+    31     19.1 MiB      0.0 MiB     vdclass = VD.VerticalDominance()
+    32     19.4 MiB      0.2 MiB     vdclass.parse(scrapedname)  #contents,coordinates,heights = 
+    33     19.4 MiB      0.1 MiB     vdclass.getstrips() #titlestrips,textstrips = 
+    34                               '''
+    35                               *** Step 1: Classify some blocks as Titles *** '''
+    36     19.4 MiB      0.0 MiB     vdclass.gettitleblocks() #titleblocks = 
+    37                               '''
+    38                               *** Step 2: Compute assignments of Textblocks to Titles *** '''
+    39     19.5 MiB      0.1 MiB     vdclass.assign_textblocks() #assignments = 
+    40                               '''
+    41                               *** Step 3: Merge articleblocks based on title *** '''
+    42     19.5 MiB      0.0 MiB     vdclass.group_textblocks()#articleblocks = 
+    43                               '''
+    44                               *** Step 4: Write to JSON: *** '''
+    45     19.5 MiB      0.0 MiB     anns = []
+    46                             
+    47     19.8 MiB      0.2 MiB     for j,(y,x,h,w) in enumerate(vdclass.titlecoors):
+    48     19.8 MiB     -0.0 MiB        anns.append({"class": "title",
+    49     19.8 MiB      0.0 MiB                     "height": h-y,
+    50     19.8 MiB      0.0 MiB                     "id": j,
+    51     19.8 MiB      0.0 MiB                     "type": "rect",
+    52     19.8 MiB      0.0 MiB                     "width": w-x,
+    53     19.8 MiB      0.0 MiB                     "x": x,
+    54     19.8 MiB      0.0 MiB                     "y": y})
+    55     20.0 MiB      0.2 MiB     for j,ab in enumerate(vdclass.articleblocks):
+    56     20.0 MiB      0.0 MiB        for (y,x,h,w) in ab:
+    57     20.0 MiB      0.0 MiB           anns.append({"class": "article",
+    58     20.0 MiB      0.0 MiB                        "height": h-y,
+    59     20.0 MiB      0.0 MiB                        "id": str(j),
+    60     20.0 MiB      0.0 MiB                        "type": "rect",
+    61     20.0 MiB      0.0 MiB                        "width": w-x,
+    62     20.0 MiB      0.0 MiB                        "x": x,
+    63     20.0 MiB      0.0 MiB                        "y": y})
+    64                             
+    65     20.0 MiB      0.0 MiB     seg = [{
+    66     20.0 MiB      0.0 MiB             "annotations": anns,
+    67                                     }]
+    68                             
+    69     20.0 MiB      0.0 MiB     with open(outname,'w') as f:
+    70     20.0 MiB      0.0 MiB        json.dump(seg, f, indent=4)
+    71     20.0 MiB      0.0 MiB     f.close()
+    72     20.0 MiB      0.0 MiB     with open('../../output/segment'+'/'+'VDnewtime', 'a+') as f:
+    73     20.0 MiB      0.0 MiB        f.write("%f"%(timeit.default_timer() - start,))   
+    74     20.0 MiB      0.0 MiB        f.write(' ')  
+    75     20.0 MiB      0.0 MiB     f.close()
+
+

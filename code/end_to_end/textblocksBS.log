@@ -1,0 +1,45 @@
+Filename: textblocksBS.py
+
+Line #    Mem usage    Increment   Line Contents
+================================================
+    31     10.0 MiB      0.0 MiB   @profile(stream = fp)
+    32                             def main():
+    33     10.0 MiB      0.0 MiB   	f_out_folder = sys.argv[1]
+    34     10.0 MiB      0.0 MiB   	f_image = sys.argv[2]
+    35     10.0 MiB      0.0 MiB   	f_xml = sys.argv[3]
+    36     10.0 MiB      0.0 MiB   	f_out = sys.argv[4].split('/')[-1]
+    37                             
+    38                             	# read xml data
+    39     10.0 MiB      0.0 MiB   	start = timeit.default_timer()
+    40    182.2 MiB    172.2 MiB   	pxml = processXML.ProcessXML(f_xml)
+    41    182.3 MiB      0.1 MiB   	tbList = pxml.getTBData() # list of (hpos,vpos,width,height) info per t.b.
+    42    182.3 MiB      0.0 MiB   	(h,w) = pxml.getTIFdimensions(); h,w=float(h),float(w)
+    43    182.5 MiB      0.2 MiB   	(hj,wj) = size_of_image(f_image)
+    44    182.5 MiB      0.0 MiB   	hs,ws = float(hj)/h, float(wj)/w
+    45    182.6 MiB      0.1 MiB   	tbList = [(hpos*ws,vpos*hs,width*ws,height*hs) for (hpos,vpos,width,height) in tbList]
+    46                             
+    47                             	# prepare to write to json by putting  data into dicts
+    48    182.6 MiB      0.0 MiB   	seg = [{"annotations":[]}]
+    49    182.6 MiB      0.0 MiB   	id = 0
+    50    183.4 MiB      0.7 MiB   	for (hpos,vpos,width,height) in tbList:
+    51    183.4 MiB      0.0 MiB   		tbInfo = {}
+    52    183.4 MiB      0.0 MiB   		tbInfo["class"] = "article"
+    53    183.4 MiB      0.0 MiB   		tbInfo["height"] = height
+    54    183.4 MiB      0.0 MiB   		tbInfo["width"] = width
+    55    183.4 MiB      0.0 MiB   		tbInfo["x"] = hpos
+    56    183.4 MiB      0.0 MiB   		tbInfo["y"] = vpos
+    57    183.4 MiB      0.0 MiB   		tbInfo["type"] = "rect"
+    58    183.4 MiB      0.0 MiB   		tbInfo["id"] = id
+    59    183.4 MiB      0.0 MiB   		seg[0]["annotations"].append(tbInfo)
+    60    183.4 MiB      0.0 MiB   		id += 1
+    61                             
+    62                             	# write to json
+    63    183.4 MiB      0.0 MiB   	with open( f_out_folder+'/'+f_out, 'w' ) as f:
+    64    183.4 MiB      0.0 MiB   		json.dump(seg, f, indent=4)
+    65    183.4 MiB      0.0 MiB   	f.close()
+    66    183.4 MiB      0.0 MiB   	with open(f_out_folder+'/'+'TBoldtime', 'a+') as f:
+    67    183.4 MiB      0.0 MiB   		f.write("%f"%(timeit.default_timer() - start,))		
+    68    183.4 MiB      0.0 MiB   		f.write(' ')
+    69    183.4 MiB      0.0 MiB   	f.close()
+
+

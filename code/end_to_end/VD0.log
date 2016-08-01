@@ -1,0 +1,55 @@
+Filename: VerticalDominance0.py
+
+Line #    Mem usage    Increment   Line Contents
+================================================
+   179      9.9 MiB      0.0 MiB   @profile(stream = fp)
+   180                             def main():
+   181      9.9 MiB      0.0 MiB     outfolder, imagename, xmlname,outname = sys.argv[1:5]
+   182      9.9 MiB      0.0 MiB     outname = outname.split('/')[-1]
+   183      9.9 MiB      0.0 MiB     outname = outfolder + '/' + outname.split('/')[-1]
+   184      9.9 MiB      0.0 MiB     scrapedname = xmlname+'.scraped.txt'
+   185      9.9 MiB      0.0 MiB     titlesname = xmlname+'.titles.txt'
+   186      9.9 MiB      0.0 MiB     textsname = xmlname+'.texts.txt'
+   187                               '''
+   188                               *** Step 0: Fetch Strips from XML ***'''
+   189    201.6 MiB    191.6 MiB     ReadTextLines.readxml(xmlname,imagename, scrapedname)
+   190    202.5 MiB      0.9 MiB     contents,coordinates,heights = parse(scrapedname)
+   191    202.5 MiB      0.0 MiB     titlestrips,textstrips = getstrips(contents,coordinates,heights)
+   192                               '''
+   193                               *** Step 1: Classify some blocks as Titles *** '''
+   194    202.5 MiB      0.0 MiB     titleblocks = gettitleblocks(titlestrips)
+   195                               '''
+   196                               *** Step 2: Compute assignments of Textblocks to Titles *** '''
+   197    202.6 MiB      0.1 MiB     assignments = assign_textblocks(titleblocks,textstrips)
+   198                               '''
+   199                               *** Step 3: Merge articleblocks based on title *** '''
+   200    202.6 MiB      0.0 MiB     articleblocks = group_textblocks(len(titleblocks),assignments)
+   201                               '''
+   202                               *** Step 4: Write to JSON: *** '''
+   203    202.6 MiB      0.0 MiB     anns = []
+   204    202.7 MiB      0.0 MiB     for j,((y,x),(h,w)) in enumerate(titleblocks):
+   205    202.7 MiB      0.0 MiB        anns.append({"class": "title",
+   206    202.7 MiB      0.0 MiB                     "height": h-y,
+   207    202.7 MiB      0.0 MiB                     "id": j,
+   208    202.7 MiB      0.0 MiB                     "type": "rect",
+   209    202.7 MiB      0.0 MiB                     "width": w-x,
+   210    202.7 MiB      0.0 MiB                     "x": x,
+   211    202.7 MiB      0.0 MiB                     "y": y})
+   212    202.7 MiB      0.0 MiB     for j,ab in enumerate(articleblocks):
+   213    202.7 MiB      0.0 MiB        for ((y,x),(h,w)) in ab:
+   214    202.7 MiB      0.0 MiB           anns.append({"class": "article",
+   215    202.7 MiB      0.0 MiB                        "height": h-y,
+   216    202.7 MiB      0.0 MiB                        "id": str(j),
+   217    202.7 MiB      0.0 MiB                        "type": "rect",
+   218    202.7 MiB      0.0 MiB                        "width": w-x,
+   219    202.7 MiB      0.0 MiB                        "x": x,
+   220    202.7 MiB      0.0 MiB                        "y": y})
+   221                             
+   222    202.7 MiB      0.0 MiB     seg = [{
+   223    202.7 MiB      0.0 MiB             "annotations": anns,
+   224                                     }]
+   225                             
+   226    202.7 MiB      0.0 MiB     with open(outname,'w') as f:
+   227    202.7 MiB      0.0 MiB        json.dump(seg, f, indent=4)
+
+

@@ -1,0 +1,3 @@
+/Users/Bruce/Documents/mdp-newspaper-segmentation/code/end_to_end/CMakeFiles/edit_cache.dir
+/Users/Bruce/Documents/mdp-newspaper-segmentation/code/end_to_end/CMakeFiles/rebuild_cache.dir
+/Users/Bruce/Documents/mdp-newspaper-segmentation/code/end_to_end/CMakeFiles/imageseg_wrap.dir
